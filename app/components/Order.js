@@ -66,11 +66,18 @@ export default function Order() {
           ))}
         </tbody>
       </table>
-      {loading ? (
-        <p>Loading...</p>
-      ) : (
-        <button onClick={loadMoreOrders}>Load More</button>
-      )}
+      {
+  orders.length > 10 && (
+    loading ? (
+      <p>Loading...</p>
+    ) : (
+      <div className='flex justify-center my-2'>
+        <button onClick={loadMoreOrders} className='border-2 px-4 py-2 rounded-lg'>Load More</button>
+      </div>
+    )
+  )
+}
+
     </div>
   );
 }
