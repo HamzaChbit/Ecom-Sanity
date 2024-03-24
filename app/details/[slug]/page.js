@@ -12,20 +12,28 @@ export default  function Page({ params }) {
 
 
   
-  const [product, setProduct] = useState(null); // State to hold product data
+   const [product, setProduct] = useState([]); // State to hold product data
+
+  // useEffect(() => {
+  //   const fetchProduct = async () => {
+  //     try {
+  //       const productData = await getProductBySlug(slug);
+  //       setProduct(productData);
+  //     } catch (error) {
+  //       console.error("Error fetching product:", error);
+  //     }
+  //   };
+
+  //   fetchProduct(); // Call fetchProduct when component mounts
+  // }, [slug]); // Dependency array should include slug, not product
 
   useEffect(() => {
-    const fetchProduct = async () => {
-      try {
-        const productData = await getProductBySlug(slug);
-        setProduct(productData);
-      } catch (error) {
-        console.error("Error fetching product:", error);
-      }
+    const fetchData = async () => {
+      const products = await getProductBySlug(slug);
+      setProduct(products);
     };
-
-    fetchProduct(); // Call fetchProduct when component mounts
-  }, [slug]); // Dependency array should include slug, not product
+    fetchData();
+  }, []);
 
   return (
     <div>

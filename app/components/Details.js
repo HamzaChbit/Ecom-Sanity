@@ -23,9 +23,9 @@ function Details({product}) {
 
         {/* Left - Main Image */}
         <div className="shadow-md relative h-96 overflow-hidden aspect-ratio-1">
-          <Image
-            src={selectedImage}
-          fill
+        <Image
+            src={selectedImage || product?.image}
+           fill
             alt="art"
           />
         </div>
@@ -96,7 +96,7 @@ function Details({product}) {
                   src={product?.image}
                   layout="fill"
                   objectfit="cover"
-                  alt="small_art1"
+                  alt="small_art122"
                 />
               </li>
           {
@@ -106,7 +106,7 @@ function Details({product}) {
                   src={image}
                   fill
                   
-                  alt="small_art1"
+                  alt="small_art12"
                 />
               </li>
             ))
