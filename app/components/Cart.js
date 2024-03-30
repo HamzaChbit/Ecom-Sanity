@@ -80,6 +80,13 @@ const onSubmit = async (e) => {
     }
   };
 
+  const truncateString = (str,num ) =>{
+    if(str?.length > num) {
+      return str.slice(8,num) 
+    }else{
+      return str
+    }
+  }
 
 
   return (
@@ -97,10 +104,10 @@ const onSubmit = async (e) => {
         </thead>
         <tbody>
           {cart.map((product) => (
-            <tr key={product.id} className="hover:bg-gray-50 text-center border-b border-gray-300 text-[#5B20B6]">
-              <td className="py-2 px-4 flex items-center">
+            <tr key={product.id} className="hover:bg-gray-50 text-center border-b border-gray-300 text-[#5B20B6] ">
+              <td className="py-2 px-4 flex items-center md:flex-row flex-col">
                 <img className='mr-2' src={product?.image} width={50} height={30} alt="art" />
-                {product?.name}
+   <h1>{truncateString(product?.name,35)}</h1> 
               </td>
               <td className="py-2 px-4">{product?.quantity}</td>
               <td className="py-2 px-4">${(product?.price * product?.quantity).toFixed(2)}</td>

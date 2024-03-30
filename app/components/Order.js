@@ -46,7 +46,7 @@ const router = useRouter()
           <tbody>
             {orders.map((order) => (
               <tr key={order._id} className="hover:bg-gray-50 text-center border-b border-gray-300 text-[#5B20B6]">
-                <td className="py-2 px-4 flex items-center">
+                <td className="py-2 px-4 flex items-center truncate">
                   {order.name}
                 </td>
                 <td className="py-2 px-4">{order.qty}</td>
