@@ -25,7 +25,13 @@ const router = useRouter()
     router.push('/')
   }
 
-
+  const truncateString = (str,num ) =>{
+    if(str?.length > num) {
+      return str.slice(8,num) 
+    }else{
+      return str
+    }
+  }
 
   return (
     <div className='max-w-3xl mx-auto mt-20'>
@@ -39,6 +45,7 @@ const router = useRouter()
             <tr className="text-[#5B20B6] border-b border-gray-200">
               <th className="py-2 px-4">Product</th>
               <th className="py-2 px-4">Quantity</th>
+              <th className="py-2 px-4">Price</th>
               <th className="py-2 px-4">Paid</th>
               <th className="py-2 px-4">Status</th>
             </tr>
@@ -46,8 +53,8 @@ const router = useRouter()
           <tbody>
             {orders.map((order) => (
               <tr key={order._id} className="hover:bg-gray-50 text-center border-b border-gray-300 text-[#5B20B6]">
-                <td className="py-2 px-4 flex items-center truncate">
-                  {order.name}
+                <td className="py-2 px-4 flex items-center ">
+                   {truncateString(order?.name,35)}
                 </td>
                 <td className="py-2 px-4">{order.qty}</td>
                 <td className="py-2 px-4">${order.price * order.qty}</td>
