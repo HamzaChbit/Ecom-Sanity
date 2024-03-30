@@ -2,14 +2,14 @@
 import { useUser } from '@clerk/nextjs';
 import { getOrdersByEmail } from '@/sanity/order-util';
 import { useState, useEffect } from 'react';
-import { useRouter } from 'next/navigation';
+
 
 
 export default function Order() {
   const { user } = useUser();
   const [orders, setOrders] = useState([]);
   const [loading, setLoading] = useState(false);
-const router = useRouter()
+
   useEffect(() => {
     if (user) {
       const fetchOrders = async () => {
@@ -21,9 +21,7 @@ const router = useRouter()
       fetchOrders();
     }
   }, [user]);
-  if(!user){
-    router.push('/')
-  }
+ 
 
   const truncateString = (str,num ) =>{
     if(str?.length > num) {
