@@ -8,6 +8,7 @@ function page() {
         <Header/>
         <Contact/>
     </div>
+    
   )
 }
 

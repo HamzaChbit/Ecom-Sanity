@@ -1,4 +1,4 @@
-  'use client'
+'use client'
 import useCartStore from '@/cartStore';
 import React, { useState } from 'react';
 import { FaTrash } from 'react-icons/fa';
@@ -29,7 +29,8 @@ function Cart() {
   const [country, setCountry] = useState('');
   const { user } = useUser();
  
- 
+  
+  const userId = user;
   const handleRemoveFromCart = (productId) => {
     removeFromCart(productId);
   };
@@ -57,8 +58,8 @@ const onSubmit = async (e) => {
         
 
         toast.success('Payment Successful');
-        const email = user?.emailAddresses[0]?.emailAddress;
-        
+        const email = userId?.emailAddresses[0]?.emailAddress;
+        console.log(email);
         if(email){
           const res = await createOrder(email,cart,address,city,zipCode,country);
          
@@ -171,5 +172,4 @@ const onSubmit = async (e) => {
 }
 
 export default Cart;
-
 

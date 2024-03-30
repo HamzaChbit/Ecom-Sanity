@@ -3,29 +3,39 @@ import Image from 'next/image';
 import React,{useState} from 'react';
 import useCartStore from "../../cartStore"
 import { toast } from 'react-hot-toast';
-
+import { UserButton, useUser } from "@clerk/nextjs";
+import Link from 'next/link';
 function Details({product}) {
   const [selectedImage, setSelectedImage] = useState(product?.image);
   const [selectedColor, setSelectedColor] = useState(product?.colors[0]);
-
+  
+  const { user } = useUser();
+  const userId = user?.id;
   //const cart = useCartStore((state) => state.cart);
   const addToCart = useCartStore((state) => state.addToCart);
   const[qty,setQty] = useState(1);
 
   const handleAddToCart = () => {
-    addToCart({ product, quantity: qty,color:selectedColor });
+    if (!selectedColor) {
+      // If color is not selected, display a message or toast to prompt the user to select a color
+      toast.error('Please select a color');
+      return; // Exit function early if color is not selected
+    }
+  
+    addToCart({ product, quantity: qty, color: selectedColor });
     toast.success('Added to cart');
   };
+  
 
   return (
     <div className='max-w-7xl mx-auto mt-20'>
       <div className='grid grid-cols-1 lg:grid-cols-2'>
 
         {/* Left - Main Image */}
-        <div className="shadow-md relative h-96 overflow-hidden aspect-ratio-1">
-        <Image
-            src={selectedImage || product?.image}
-           fill
+        <div className="shadow-md relative md:min-h-[500px]  h-52 overflow-hidden aspect-ratio-1 flex items-center justify-center">
+        <Image className='md:min-w-[250px] md:min-h-[450px]    min-w-[100px] max-h-[150px]'
+             src={selectedImage || product?.image}
+           width={150} height={150}
             alt="art"
           />
         </div>
@@ -79,11 +89,26 @@ function Details({product}) {
 
 
           
-          <div className="mt-6">
-            <button onClick={handleAddToCart} className="bg-[#5B20B6] text-white px-6 py-3 rounded-md">
-              Add to Cart
-            </button>
-          </div>
+<div className="mt-5">
+  {userId ? (
+    // Show "Add to Cart" button if the user is logged in
+    <button onClick={handleAddToCart} className="bg-[#5B20B6] text-white px-6 py-3 rounded-md">
+      Add to Cart
+    </button>
+  ) : (
+    // Show sign-up prompt if the user is not logged in
+    <div className="flex md:flex-row flex-col " >
+      <Link href="/sign-up">
+        <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+          Sign Up
+        </button>
+      </Link>
+      <p className="text-red-400 font-mono mt-2 text-center px-2">
+        Register with an account, then add to cart.
+      </p>
+    </div>
+  )}
+</div>
 
         </div>
       </div>
@@ -91,11 +116,10 @@ function Details({product}) {
       {/* Below Main Image - Small Image List */}
       <div className="mt-2">
       <ul className="flex gap-4 overflow-x-auto">
-            <li onClick={()=>{setSelectedImage(product?.image)}} className={`${selectedImage == product?.image? "border-4 border-[#5b20b6]":""} w-20 relative overflow-hidden aspect-ratio-1 cursor-pointer hover:border-4 border-[#5b20b6]`}>
-                <img
+            <li onClick={()=>{setSelectedImage(product?.image)}} className={`${selectedImage == product?.image? "border-4 border-[#5b20b6]":""} w-20 relative overflow-hidden aspect-ratio-1 cursor-pointer hover:border-4 border-[#5b20b6] `}>
+                <Image
                   src={product?.image}
-                  layout="fill"
-                  objectfit="cover"
+                  width={150} height={150}
                   alt="small_art122"
                 />
               </li>
@@ -104,8 +128,8 @@ function Details({product}) {
               <li key={image} onClick={()=>{setSelectedImage(image)}} className={`${selectedImage == image? "border-4 border-[#5b20b6]":""} w-20 relative overflow-hidden aspect-ratio-1 cursor-pointer hover:border-4 border-[#5b20b6]`}>
                 <Image
                   src={image}
+                
                   fill
-                  
                   alt="small_art12"
                 />
               </li>

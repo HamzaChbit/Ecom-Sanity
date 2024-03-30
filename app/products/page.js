@@ -4,14 +4,14 @@ import Header from '../components/Header';
 import Footer from '../components/Footer';
 import Card from '../components/Card';
 import {  getProducts } from '@/sanity/product-util';
-
+import { motion } from 'framer-motion'
 
 function Products() {
   const [data, setData] = useState([]);
   const [minPrice, setMinPrice] = useState('');
   const [sortBy, setSortBy] = useState('latest');
   const [currentPage, setCurrentPage] = useState(1);
-  const [productsPerPage,setProductsPerPage] = useState(5);
+  const [productsPerPage,setProductsPerPage] = useState(6);
   const [searchQuery, setSearchQuery] = useState('');
 
 
@@ -62,7 +62,7 @@ function Products() {
     setMinPrice('');
     setSortBy('latest');
     setCurrentPage(1);
-    setProductsPerPage(5);
+    setProductsPerPage(6);
     setSearchQuery('');
     fetchData();
   };
@@ -86,8 +86,8 @@ function Products() {
       <Header />
 
       <div className="flex flex-col items-center justify-center mt-10 space-y-4">
-        <h1 className="text-4xl font-bold text-[#5B20B6] text-center">Get Artistic Prints!</h1>
-        <p className="text-center text-xl text-gray-500">Elevate your space with stunning art prints, Transform your surroundings with captivating visuals. 🎨✨</p>
+        <h1 className="text-4xl font-bold text-[#5B20B6] text-center"></h1>
+       
       </div>
 
       
@@ -95,7 +95,7 @@ function Products() {
 
       <div className="flex flex-col md:flex-row p-10">
         {/* Filters */}
-        <div className="mr-8">
+        <motion.div  initial={{y:10,opacity:0}} animate={{y:0,opacity:1}} transition={{duration:0.3,delay:0.4}} className="mr-8">
           <h1 className="text-2xl font-semibold text-[#5B20B6] mb-4">Filters</h1>
           <div className="space-y-4">
              {/* Search Input */}
@@ -189,7 +189,7 @@ function Products() {
               >
                 Reset
               </button>
-        </div>
+        </motion.div>
         
           <p className='text-sm text-gray-700'>{
            data.length > productsPerPage && (<>
