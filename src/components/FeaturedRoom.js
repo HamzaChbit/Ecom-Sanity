@@ -1,9 +1,9 @@
-"use client";
+
 import React from "react";
 
 import Card from "./Card";
 
-function FeaturedRoom({ featuredRoom }) {
+export default async function FeaturedRoom({ featuredRoom }) {
   return (
     <div className="flex p-10">
       <div
@@ -18,4 +18,3 @@ function FeaturedRoom({ featuredRoom }) {
   );
 }
 
-export default FeaturedRoom;
