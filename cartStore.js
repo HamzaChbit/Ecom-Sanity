@@ -69,21 +69,26 @@ const useCartStore = create((set) => {
   };
 });
 
-function calculateCartTotal(cart) {
-  return cart.reduce((total, item) => total + item.price * item.quantity, 0);
-}
-
-function calculateTotalItems(cart) {
-  return cart.reduce((total, item) => total + 1, 0);
-}
-
 // function calculateCartTotal(cart) {
 //   return cart.reduce((total, item) => total + item.price * item.quantity, 0);
 // }
 
 // function calculateTotalItems(cart) {
-//   return cart.reduce((total, item) => total + item.quantity, 0);
+//   return cart.reduce((total, item) => total + 1, 0);
 // }
+
+function calculateCartTotal(cart) {
+  return cart.reduce((total, item) => {
+    const price = item.discount
+      ? item.price * (1 - item.discount / 100)
+      : item.price;
+    return total + price * item.quantity;
+  }, 0);
+}
+
+function calculateTotalItems(cart) {
+  return cart.reduce((total, item) => total + item.quantity, 0);
+}
 
 
 export default useCartStore;

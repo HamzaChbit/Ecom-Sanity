@@ -21,6 +21,11 @@ const order = {
         type: "number",
         validation: (Rule) => Rule.required().min(0),
       },
+       {
+        name: "color",
+        title: "Color",
+        type: "string",
+      },
 
       {
         name: 'address',
@@ -55,11 +60,14 @@ const order = {
         type: "number",
         validation: (Rule) => Rule.required().min(0),
       },
-      {
-        name: "color",
-        title: "Color",
-        type: "string",
-      },
+          {
+      name: "discount",
+      title: "Discount (%)",
+      type: "number",
+      validation: (Rule) => Rule.min(0).max(100),
+      initialValue: 0,
+    },
+     
 //       {
 //   name: "storage",
 //   title: "Storage",

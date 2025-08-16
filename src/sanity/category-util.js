@@ -21,8 +21,44 @@ const client = createClient({
 // }
 
 
-export async function getCategories() {
+// export async function getCategories() {
+//   return client.fetch(
+//     groq`*[_type == "category"]{ _id, title, "slug": slug.current }`
+//   );
+// }
+
+export async function getParentCategories() {
   return client.fetch(
-    groq`*[_type == "category"]{ _id, title, "slug": slug.current }`
+    groq`*[_type == "category" && !defined(parent)]{
+      _id,
+      title,
+      "slug": slug.current
+    }`
+  );
+}
+
+// getCategoriesWithChildren.js
+export async function getCategoriesWithChildren() {
+  return client.fetch(`
+    *[_type == "category"]{
+      _id,
+      title,
+      "slug": slug.current,
+      children[]->{
+        _id,
+        title,
+        "slug": slug.current
+      }
+    }
+  `);
+}
+export async function getSubcategories(parentTitle) {
+  return client.fetch(
+    groq`*[_type=="category" && parent->title == $parentTitle]{
+      _id,
+      title,
+      "slug": slug.current
+    }`,
+    { parentTitle }
   );
 }

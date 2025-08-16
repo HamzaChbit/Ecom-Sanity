@@ -30,13 +30,29 @@ const product = {
     //   },
     //   validation: (Rule) => Rule.required(),
     // },
-{
-  name: "category",
-  title: "Category",
-  type: "reference",
-  to: [{ type: "category" }],
-  validation: (Rule) => Rule.required(),
-}
+// {
+//   name: "category",
+//   title: "Category",
+//   type: "reference",
+//   to: [{ type: "category" }],
+//   validation: (Rule) => Rule.required(),
+// }
+
+
+{ 
+      name: "parentCategory",
+      title: "Parent Category",
+      type: "reference",
+      to: [{ type: "category" }],
+      description: "مثلا PC Portable أو iPhone"
+    },
+    { 
+      name: "brandCategory",
+      title: "Brand / Subcategory",
+      type: "reference",
+      to: [{ type: "category" }],
+      description: "مثلا Dell, HP, Lenovo, Samsung, Redmi"
+    }
 ,
 
     {
@@ -94,6 +110,15 @@ const product = {
       type: "number",
       validation: (Rule) => Rule.required().min(0),
     },
+    
+    {
+  name: "discount",
+  title: "Discount (%)",
+  type: "number",
+  description: "Discount percentage for this product. Example: 20 for 20%",
+  validation: (Rule) => Rule.min(0).max(100),
+}
+,
 
     {
   name: "featured",

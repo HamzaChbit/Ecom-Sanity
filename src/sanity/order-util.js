@@ -58,32 +58,59 @@ const client = createClient({
     try {
       // Create an array to store the promises for creating each order
       const orderCreationPromises = [];
-  
-      // Iterate over the orderDataArray and create a promise for each order
-      cart.forEach((orderData) => {
-        // Extract order data
-        const { name, quantity, price,color} = orderData;
 
-        // Create a promise for creating each order
-        const orderCreationPromise = client.create({
-          _type: 'order',
-          name,
-          qty: quantity,
-          price:price * quantity, // Assuming price is per item, multiply by quantity
-          color,
-        
-          // paid: true,
-          // delivered: false,
-          email,
-          address,
-          city, zipCode,country,
-          createdAt: new Date().toISOString(),
-        });
+
+      // Iterate over the orderDataArray and create a promise for each order
+    //   cart.forEach((orderData) => {
+    //     // Extract order data
+    //     const { name, quantity, color,discount = 0} = orderData;
+    // const finalPrice = discount 
+    //     ? price * (1 - discount / 100) * quantity
+    //     : price * quantity;
+    //     // Create a promise for creating each order
+    //     const orderCreationPromise = client.create({
+    //       _type: 'order',
+    //       name,
+    //       qty: quantity,
+    //       price:finalPrice, // Assuming price is per item, multiply by quantity
+    //       color,
+    //      discount: discount || 0,
+    //       // paid: true,
+    //       // delivered: false,
+    //       email,
+    //       address,
+    //       city, zipCode,country,
+    //       createdAt: new Date().toISOString(),
+    //     });
   
-        // Add the promise to the array
-        orderCreationPromises.push(orderCreationPromise);
-      });
-  
+    //     // Add the promise to the array
+    //     orderCreationPromises.push(orderCreationPromise);
+    //   });
+  cart.forEach((orderData) => {
+  const { name, quantity, price, color, discount = 0 } = orderData; // <-- price added
+
+  const finalPrice = discount 
+    ? price * (1 - discount / 100) * quantity
+    : price * quantity;
+
+  const orderCreationPromise = client.create({
+    _type: 'order',
+    name,
+    qty: quantity,
+    price: finalPrice, // calculated with discount
+    color,
+    discount,
+    email,
+    address,
+    city,
+    zipCode,
+    country,
+    createdAt: new Date().toISOString(),
+  });
+
+  orderCreationPromises.push(orderCreationPromise);
+});
+
       // Wait for all order creation promises to resolve
       const createdOrders = await Promise.all(orderCreationPromises);
   

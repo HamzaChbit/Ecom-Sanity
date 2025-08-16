@@ -4,7 +4,7 @@ import { getFeaturedProducts } from "@/src/sanity/product-util";
 
 
 
-
+export const revalidate = 10;
 
 
 

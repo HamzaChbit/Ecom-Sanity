@@ -57,6 +57,17 @@ const onSubmit = async (e) => {
 
     if (response.status === 200) {
       cart.forEach(product => removeFromCart(product._id));
+
+        const message = cart.map(p => `${p.name} x ${p.quantity} = $${(p.price * p.quantity).toFixed(2)}`).join("\n");
+      const finalMessage = `New Order:\nEmail: ${email}\nAddress: ${address}, ${city}, ${zipCode}, ${country}\n\nItems:\n${message}\nTotal: $${cartTotal.toFixed(2)}`;
+
+      // 4️⃣ Send WhatsApp
+      await axios.post('/api/send-whatsapp', {
+        message: finalMessage,
+        phoneNumber: '+21264977110' // Your WhatsApp number
+      });
+
+
       toast.success("Order placed successfully");
        router.push("/");
     } else {
@@ -77,6 +88,7 @@ const onSubmit = async (e) => {
   }
 
 
+
   useEffect(() => {
     if (!cart || cart.length === 0) {
       router.push("/products");
@@ -95,8 +107,9 @@ const onSubmit = async (e) => {
             <th className="py-2 px-4">Remove</th>
           </tr>
         </thead>
-        <tbody>
+        {/* <tbody>
           {cart.map((product) => (
+            
             <tr key={product.id} className="hover:bg-gray-50 text-center border-b border-gray-300 text-[#5B20B6] ">
               <td className="py-2 px-4 flex items-center md:flex-row flex-col">
                 <img className='mr-2' src={product?.image} width={50} height={30} alt="art" />
@@ -109,7 +122,29 @@ const onSubmit = async (e) => {
               </td>
             </tr>
           ))}
-        </tbody>
+        </tbody> */}
+        <tbody>
+  {cart.map((product) => {
+    const finalPrice = product.discount 
+      ? product.price - (product.price * product.discount / 100)
+      : product.price;
+
+    return (
+      <tr key={product.id} className="hover:bg-gray-50 text-center border-b border-gray-300 text-[#5B20B6] ">
+        <td className="py-2 px-4 flex items-center md:flex-row flex-col">
+          <img className='mr-2' src={product?.image} width={50} height={30} alt="art" />
+          <h1>{truncateString(product?.name,35)}</h1> 
+        </td>
+        <td className="py-2 px-4">{product?.quantity}</td>
+        <td className="py-2 px-4">${(finalPrice * product?.quantity).toFixed(2)}</td>
+        <td className="py-2 px-4">
+          <FaTrash onClick={() => { handleRemoveFromCart(product?._id) }} className="text-[#5B20B6] mx-auto cursor-pointer" />
+        </td>
+      </tr>
+    )
+  })}
+</tbody>
+
       </table>
 
       <div className="mt-4 text-[#5B20B6] ml-auto">
@@ -121,6 +156,8 @@ const onSubmit = async (e) => {
 <div className="mt-4 text-[#5B20B6]  ">
 
 {cartTotal > 0 && (
+
+
         <form  onSubmit={onSubmit} className='' >
              <div className='flex md:flex-row flex-col justify-around' >
           <input

@@ -22,6 +22,7 @@ export async function getProductBySlug(slug) {
       slug,
       description,
       price,
+       discount,
       "image": image.asset->url,
       "slug": slug.current,
       "extraImages": extraImages[].asset->url,
@@ -51,16 +52,21 @@ export async function getProductBySlug(slug) {
 //     { categoryId }
 //   );
 // }
-
 export async function getProductsByCategorySlug(slug) {
   return client.fetch(
-    groq`*[_type == "product" && category->slug.current == $slug]{
+    groq`*[_type == "product" && parentCategory->slug.current == $slug]{
       _id,
       name,
       price,
+       discount,
       "image": image.asset->url,
       "slug": slug.current,
-      category->{
+      parentCategory->{
+        _id,
+        title,
+        "slug": slug.current
+      },
+      brandCategory->{
         _id,
         title,
         "slug": slug.current
@@ -70,6 +76,53 @@ export async function getProductsByCategorySlug(slug) {
   );
 }
 
+// export async function getProductsByCategorySlug(slug) {
+//   return client.fetch(
+//     groq`*[_type == "product" && category->slug.current == $slug]{
+//       _id,
+//       name,
+//       price,
+//       "image": image.asset->url,
+//       "slug": slug.current,
+//       category->{
+//         _id,
+//         title,
+//         "slug": slug.current
+//       }
+//     }`,
+//     { slug }
+//   );
+// }
+
+
+export async function getProductsByBrandSlug(slug) {
+  return client.fetch(
+    groq`*[_type == "product" && brandCategory->slug.current == $slug]{
+      _id,
+      name,
+      price,
+       discount,
+      "image": image.asset->url,
+      "slug": slug.current,
+      parentCategory->{
+        _id,
+        title,
+        "slug": slug.current
+      },
+      brandCategory->{
+        _id,
+        title,
+        "slug": slug.current
+      }
+    }`,
+    { slug }
+  );
+}
+
+
+
+
+
 export async function getFeaturedProducts() {
   return client.fetch(
     groq`*[_type == "product" && featured == true]{
@@ -78,6 +131,7 @@ export async function getFeaturedProducts() {
       "slug": slug.current,
       "image": image.asset->url,
       price,
+      discount,
       description,
       category->{title, slug}
     } | order(createdAt desc)`
@@ -96,6 +150,7 @@ export async function getProducts() {
       description,
       price,
       category,
+       discount,
       "image": image.asset->url,
       "slug": slug.current,
       "extraImages": extraImages[].asset->url,
@@ -105,3 +160,4 @@ export async function getProducts() {
   );
   
 }
+
