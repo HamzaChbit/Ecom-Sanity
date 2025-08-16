@@ -69,11 +69,11 @@ const client = createClient({
           _type: 'order',
           name,
           qty: quantity,
-          price,
+          price:price * quantity, // Assuming price is per item, multiply by quantity
           color,
         
-          paid: true,
-          delivered: false,
+          // paid: true,
+          // delivered: false,
           email,
           address,
           city, zipCode,country,

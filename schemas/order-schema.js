@@ -60,11 +60,11 @@ const order = {
         title: "Color",
         type: "string",
       },
-      {
-  name: "storage",
-  title: "Storage",
-  type: "string",
-},
+//       {
+//   name: "storage",
+//   title: "Storage",
+//   type: "string",
+// },
 
      
       {
@@ -76,17 +76,17 @@ const order = {
         },
         readOnly: true,
       }
-      ,{
-        name: "paid",
-        title: "Paid",
-        type: "boolean",
-        validation: (Rule) => Rule.required(),
-      },{
-        name: "delivered",
-        title: "Delivered",
-        type: "boolean",
-        validation: (Rule) => Rule.required(),
-      },
+      // ,{
+      //   name: "paid",
+      //   title: "Paid",
+      //   type: "boolean",
+      //   validation: (Rule) => Rule.required(),
+      // },{
+      //   name: "delivered",
+      //   title: "Delivered",
+      //   type: "boolean",
+      //   validation: (Rule) => Rule.required(),
+      // },
     ],
     initialValue: {
       createdAt: new Date().toISOString(),

@@ -3,8 +3,8 @@ import Image from 'next/image';
 import React,{useEffect, useState} from 'react';
 import useCartStore from "../../cartStore"
 import { toast } from 'react-hot-toast';
-import { UserButton, useUser } from "@clerk/nextjs";
-import Link from 'next/link';
+
+
 function Details({product}) {
   const [selectedImage, setSelectedImage] = useState(product?.image);
 //  const [selectedColor, setSelectedColor] = useState(product?.colors[0]);

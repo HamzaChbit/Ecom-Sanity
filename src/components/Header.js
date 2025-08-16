@@ -1,9 +1,7 @@
 "use client"
 
 import { FaShoppingCart } from "react-icons/fa";
-import { MdLocalShipping } from "react-icons/md";
 
-import { UserButton, useUser } from "@clerk/nextjs";
 
 import Link from 'next/link';
 import { useEffect, useState } from "react";
@@ -36,10 +34,14 @@ function Header() {
         </div>
         </Link>
 
-<div className="flex space-x-4">
+<div className="flex items-center space-x-6 overflow-x-auto scrollbar-hide">
   {data.map((cat) => (
-    <Link key={cat.slug} href={`/category/${cat?.slug}`}>
-      <h1 className="text-black cursor-pointer hover:underline">{cat.title}</h1>
+    <Link
+      key={cat.slug}
+      href={`/category/${cat?.slug}`}
+      className="text-gray-700 font-medium hover:text-[#5B20B6] transition-colors duration-300"
+    >
+      {cat.title}
     </Link>
   ))}
 </div>

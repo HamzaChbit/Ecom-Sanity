@@ -1,5 +1,3 @@
-
-
 import Details from "@/src/components/Details";
 import { getProductBySlug } from "@/src/sanity/product-util";
 
