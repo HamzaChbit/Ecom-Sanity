@@ -65,6 +65,61 @@ function Cart() {
 //   }
 // };
 
+// const onSubmit = async (e) => {
+//   e.preventDefault();
+
+//   if (!email || !address || !city || !zipCode || !country) {
+//     toast.error("Please fill all fields");
+//     return;
+//   }
+
+//   try {
+//     setLoading(true);
+
+//     // بعث البيانات مباشرة لل API order
+//     const response = await axios.post("/api/order", {
+     
+//       cart,
+//       address,
+//       city,
+//       email,
+//       zipCode,
+//       country,
+//     });
+
+//     if (response.status === 200) {
+//       cart.forEach(product => removeFromCart(product._id));
+//       toast.success("Order placed successfully");
+//  const message = `
+// New Order:
+// Email: ${email}
+// Address: ${address}, ${city}, ${zipCode}, ${country}
+
+// Items:
+// ${cart.map(p => {
+//   const finalPrice = p.discount ? p.price - (p.price * p.discount / 100) : p.price;
+//   return `${p.name} x ${p.quantity} = $${(finalPrice * p.quantity).toFixed(2)}`;
+// }).join("\n")}
+
+
+// Total: $${cartTotal.toFixed(2)}
+//       `;
+
+//       // 3️⃣ افتح WhatsApp
+//       const whatsappURL = `https://wa.me/212694977110?text=${encodeURIComponent(message)}`;
+//       window.open(whatsappURL, "_blank");
+
+//     } else {
+//       toast.error("Failed to place order 1");
+//     }
+//   } finally {
+//     setLoading(false);
+//   }
+// };
+
+
+
+
 const onSubmit = async (e) => {
   e.preventDefault();
 
@@ -78,7 +133,6 @@ const onSubmit = async (e) => {
 
     // بعث البيانات مباشرة لل API order
     const response = await axios.post("/api/order", {
-     
       cart,
       address,
       city,
@@ -89,26 +143,28 @@ const onSubmit = async (e) => {
 
     if (response.status === 200) {
       cart.forEach(product => removeFromCart(product._id));
-
-        const message = cart.map(p => `${p.name} x ${p.quantity} = $${(p.price * p.quantity).toFixed(2)}`).join("\n");
-      const finalMessage = `New Order:\nEmail: ${email}\nAddress: ${address}, ${city}, ${zipCode}, ${country}\n\nItems:\n${message}\nTotal: $${cartTotal.toFixed(2)}`;
-
-      // 4️⃣ Send WhatsApp
-      await axios.post('/api/send-whatsapp', {
-        message: finalMessage,
-        phoneNumber: '+21269477110' // Your WhatsApp number
-      });
-
-
       toast.success("Order placed successfully");
-       router.push("/");
+
+      // بناء رسالة WhatsApp مع صورة و رابط المنتج
+      const message = cart.map(p => {
+        const finalPrice = p.discount ? p.price - (p.price * p.discount / 100) : p.price;
+        return `${p.name} x ${p.quantity} = $${(finalPrice * p.quantity).toFixed(2)}\n${p.url}\n${p.image}`;
+      }).join("\n\n");
+
+      const finalMessage = `New Order:\nEmail: ${email}\nAddress: ${address}, ${city}, ${zipCode}, ${country}\n\nItems:\n${message}\n\nTotal: $${cartTotal.toFixed(2)}`;
+
+      // فتح WhatsApp
+      const whatsappURL = `https://wa.me/212694977110?text=${encodeURIComponent(finalMessage)}`;
+      window.open(whatsappURL, "_blank");
+
     } else {
-      toast.error("Failed to place order 1");
+      toast.error("Failed to place order");
     }
   } finally {
     setLoading(false);
   }
 };
+
 
 
   const truncateString = (str,num ) =>{
