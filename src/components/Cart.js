@@ -58,14 +58,14 @@ const onSubmit = async (e) => {
     if (response.status === 200) {
       cart.forEach(product => removeFromCart(product._id));
 
-        const message = cart.map(p => `${p.name} x ${p.quantity} = $${(p.price * p.quantity).toFixed(2)}`).join("\n");
-      const finalMessage = `New Order:\nEmail: ${email}\nAddress: ${address}, ${city}, ${zipCode}, ${country}\n\nItems:\n${message}\nTotal: $${cartTotal.toFixed(2)}`;
+      //   const message = cart.map(p => `${p.name} x ${p.quantity} = $${(p.price * p.quantity).toFixed(2)}`).join("\n");
+      // const finalMessage = `New Order:\nEmail: ${email}\nAddress: ${address}, ${city}, ${zipCode}, ${country}\n\nItems:\n${message}\nTotal: $${cartTotal.toFixed(2)}`;
 
-      // 4️⃣ Send WhatsApp
-      await axios.post('/api/send-whatsapp', {
-        message: finalMessage,
-        phoneNumber: '+21269477110' // Your WhatsApp number
-      });
+      // // 4️⃣ Send WhatsApp
+      // await axios.post('/api/send-whatsapp', {
+      //   message: finalMessage,
+      //   phoneNumber: '+21269477110' // Your WhatsApp number
+      // });
 
 
       toast.success("Order placed successfully");
