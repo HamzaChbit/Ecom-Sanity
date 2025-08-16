@@ -42,7 +42,7 @@ function Cart() {
   try {
     setLoading(true);
 
-    // بعث البيانات مباشرة لل API order
+   
     const response = await axios.post("/api/order", {
      
       cart,
