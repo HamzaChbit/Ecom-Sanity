@@ -73,9 +73,9 @@ const useCartStore = create((set) => {
 //   return cart.reduce((total, item) => total + item.price * item.quantity, 0);
 // }
 
-// function calculateTotalItems(cart) {
-//   return cart.reduce((total, item) => total + 1, 0);
-// }
+function calculateTotalItems(cart) {
+  return cart.reduce((total, item) => total + 1, 0);
+}
 
 function calculateCartTotal(cart) {
   return cart.reduce((total, item) => {
@@ -86,9 +86,9 @@ function calculateCartTotal(cart) {
   }, 0);
 }
 
-function calculateTotalItems(cart) {
-  return cart.reduce((total, item) => total + item.quantity, 0);
-}
+// function calculateTotalItems(cart) {
+//   return cart.reduce((total, item) => total + item.quantity, 0);
+// }
 
 
 export default useCartStore;

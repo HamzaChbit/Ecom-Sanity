@@ -64,7 +64,7 @@ const onSubmit = async (e) => {
       // 4️⃣ Send WhatsApp
       await axios.post('/api/send-whatsapp', {
         message: finalMessage,
-        phoneNumber: '+21264977110' // Your WhatsApp number
+        phoneNumber: '+21269477110' // Your WhatsApp number
       });
 
 
