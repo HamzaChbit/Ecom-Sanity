@@ -75,9 +75,9 @@ export default function BrandPage({ params }) {
   return (
     <div className="max-w-7xl mx-auto p-4">
       {/* Title */}
-      <h1 className="text-3xl font-bold mb-6 capitalize">
+      {/* <h1 className="text-3xl font-bold mb-6 capitalize">
         Brand: {slug.replace("-", " ")}
-      </h1>
+      </h1> */}
 
       <div className="flex flex-col md:flex-row">
         {/* Filters */}
@@ -154,7 +154,7 @@ export default function BrandPage({ params }) {
         </motion.div>
 
         {/* Products */}
-        <div className="flex-1">
+        <div className="flex-1 my-2">
           {currentProducts.length === 0 ? (
             <p>No products found for this brand.</p>
           ) : (

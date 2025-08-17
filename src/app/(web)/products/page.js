@@ -204,7 +204,7 @@ function Products() {
             
 
         {/* Product Grid */}
-        <div className='mx-auto grid grid-cols-1 lg:grid-cols-2 gap-16'>
+        <div className='mx-auto grid grid-cols-1 lg:grid-cols-2 gap-16 my-2'>
           {currentProducts?.map((product) => (
             <Card key={product._id} product={product} />
           ))}

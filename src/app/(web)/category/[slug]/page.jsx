@@ -160,7 +160,7 @@ export default function CategoryPage({ params }) {
           </motion.div>
 
           {/* Products */}
-          <div className="flex-1">
+          <div className="flex-1 my-2">
             {currentProducts.length === 0 ? (
               <p>No products found.</p>
             ) : (

@@ -101,12 +101,19 @@ function Header() {
       <div className="p-4 border-b-2 border-gray-100">
         <div className="max-w-7xl mx-auto flex justify-between items-center">
           <Link href="/" onClick={closeAllMenus} className="flex items-center flex-shrink-0">
-            <img src="/logo.png" alt="logo" width={40} height={40} />
-            <h1 className="ml-2 text-2xl lg:text-3xl font-bold text-gray-800">TechTrove</h1>
+            {/* <img src="/logo.png" alt="logo" width={40} height={40} /> */}
+            <h1 className="ml-2 text-xl lg:text-3xl font-bold text-gray-800">DESKTOPPLUS</h1>
           </Link>
 
           <div className="flex-grow flex justify-center">
             <NavLinks />
+                   <Link
+              href="/contact"
+              onClick={closeAllMenus}
+              className="hidden md:block rounded-md px-3 py-2 text-base font-medium text-gray-600 transition-colors hover:bg-gray-100 hover:text-[#5B20B6]"
+            >
+                Contact
+            </Link>
           </div>
 
           <div className="flex items-center gap-4">
@@ -135,6 +142,13 @@ function Header() {
       {isMobileMenuOpen && (
         <div className="md:hidden p-4 border-b-2 border-gray-100 bg-white">
           <NavLinks isMobile={true}/>
+                  <Link
+            href="/contact"
+            onClick={closeAllMenus}
+            className="w-full text-left rounded-md px-3 py-2 text-base font-medium text-gray-600 transition-colors hover:bg-gray-100 hover:text-[#5B20B6]"
+          >
+              Contact
+          </Link>
         </div>
       )}
     </header>

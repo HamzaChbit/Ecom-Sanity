@@ -11,7 +11,7 @@ import Footer from "@/src/components/Footer";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata = {
-  title: 'TechTrove',
+  title: 'DESKTOPPLUS',
   description: 'Explore the latest in technology and elevate your lifestyle with cutting-edge gadgets. ',
 };
 

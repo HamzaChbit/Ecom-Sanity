@@ -28,7 +28,7 @@ export default async  function Page({ params }) {
       <div className="mb-20">
       {product && <Details product={product[0]} />} 
       <Comments  product={product[0]}/>
-    <h2 className="text-2xl font-bold  my-10 text-center ">Related Products</h2>
+    <h2 className="text-2xl font-bold text-[#5B20B6]   my-10 text-center ">Related Products</h2>
        <div className=" max-w-7xl mx-auto mt-20 mb:mx-1  grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 ">
        
 

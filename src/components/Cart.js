@@ -210,11 +210,11 @@ window.open(whatsappURL, "_blank");
 
 
 
-  useEffect(() => {
-    if (!cart || cart.length === 0) {
-      router.push("/products");
-    }
-  }, [cart, router]);
+  // useEffect(() => {
+  //   if (!cart || cart.length === 0) {
+  //     router.push("/products");
+  //   }
+  // }, [cart, router]);
   return (
     <div className='max-w-3xl mx-auto mt-20'>
       <h1 className="text-3xl text-center font-semibold text-[#5B20B6] mb-6"> {totalItems} Items in Cart</h1>
@@ -353,11 +353,13 @@ window.open(whatsappURL, "_blank");
 
 
         <div className='max-w-sm mx-auto space-y-4 my-2' >
+            <Link className='' href="/">
                  <button className="text-lg w-full font-semibold text-center mr-4 bg-white hover:bg-[#5B20B6] hover:text-white text-[#5B20B6] border border-[#5B20B6] py-2 px-4 rounded">
-          <Link className='' href="/">
+        
             Back to Shopping
-            </Link>  
+         
           </button>  
+              </Link> 
         </div>
          
    
