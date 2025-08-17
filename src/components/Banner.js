@@ -9,13 +9,13 @@ function Banner() {
 
   return (
     <div>
-      <motion.section  initial={{y:10,opacity:0}} animate={{y:0,opacity:1}} transition={{duration:0.3,delay:0.5}}     className="bg-white dark:bg-gray-900 w-full">
+      <motion.section  initial={{y:10,opacity:0}} animate={{y:0,opacity:1}} transition={{duration:0.3,delay:0.5}}     className="bg-white  w-full">
         <div className="flex max-w-screen-xl py-8 mx-auto px-16 lg:py-16 lg:flex-row justify-between items-center ">
           <div className="mx-auto place-self-center lg:col-span-7 pr-9  ">
-            <motion.h1  initial={{y:10,opacity:0}} animate={{y:0,opacity:1}} transition={{duration:0.4,delay:0.7}}    className="max-w-2xl mb-4 text-4xl font-extrabold tracking-tight leading-none md:text-5xl xl:text-6xl dark:text-white">
+            <motion.h1  initial={{y:10,opacity:0}} animate={{y:0,opacity:1}} transition={{duration:0.4,delay:0.7}}    className="max-w-2xl mb-4 text-4xl font-extrabold tracking-tight leading-none md:text-5xl xl:text-6xl ">
             Uncover Innovation at TechTrove 
             </motion.h1>
-            <motion.p initial={{y:10,opacity:0}} animate={{y:0,opacity:1}} transition={{duration:0.4,delay:0.7}}  className="max-w-2xl mb-6 font-light text-gray-500 lg:mb-8 md:text-lg lg:text-xl dark:text-gray-400">
+            <motion.p initial={{y:10,opacity:0}} animate={{y:0,opacity:1}} transition={{duration:0.4,delay:0.7}}  className="max-w-2xl mb-6 font-light text-gray-500 lg:mb-8 md:text-lg lg:text-xl ">
             Experience the Future Today - Connect with Our Expert Tech Team!
             </motion.p>
             <Link
@@ -40,7 +40,7 @@ function Banner() {
 
    <Link
     href="/contact"
-    className="inline-flex items-center justify-center md:px-5 md:my-0 my-2 px-1 py-3 text-base font-medium text-center text-gray-900 border border-gray-300 rounded-lg hover:bg-gray-100 focus:ring-4 focus:ring-gray-100 dark:text-white dark:border-gray-700 dark:hover:bg-gray-700 dark:focus:ring-gray-800"
+    className="inline-flex items-center justify-center md:px-5 md:my-0 my-2 px-1 py-3 text-base font-medium text-center text-gray-900 border border-gray-300 rounded-lg hover:bg-gray-100 focus:ring-4 focus:ring-gray-100 "
   >
     Speak to Sales
   </Link>

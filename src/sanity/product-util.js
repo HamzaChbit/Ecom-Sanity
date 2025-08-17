@@ -60,6 +60,7 @@ export async function getProductsByCategorySlug(slug) {
       name,
       price,
        discount,
+       createdAt,
       specs,
       "image": image.asset->url,
       "slug": slug.current,
@@ -104,6 +105,7 @@ export async function getProductsByBrandSlug(slug) {
       name,
       price,
        discount,
+       createdAt,
        specs,
       "image": image.asset->url,
       "slug": slug.current,
@@ -164,5 +166,27 @@ export async function getProducts() {
     }`
   );
   
+}
+
+export async function getProductsRetailed(limit = 4, excludeSlug = null) {
+  const products = await client.fetch(
+    groq`*[_type == "product"]{
+      _id,
+      name,
+      price,
+      discount,
+      specs,
+      "slug": slug.current,
+      "image": image.asset->url
+    }`
+  );
+
+  // نحيد المنتج الرئيسي
+  const filtered = excludeSlug
+    ? products.filter((p) => p.slug !== excludeSlug)
+    : products;
+
+  // shuffle + slice
+  return filtered.sort(() => 0.5 - Math.random()).slice(0, limit);
 }
 

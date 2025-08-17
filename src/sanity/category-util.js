@@ -31,6 +31,7 @@ export async function getParentCategories() {
   return client.fetch(
     groq`*[_type == "category" && !defined(parent)]{
       _id,
+      createdAt,
       title,
       "slug": slug.current
     }`
@@ -42,6 +43,7 @@ export async function getCategoriesWithChildren() {
   return client.fetch(`
     *[_type == "category"]{
       _id,
+      createdAt,
       title,
       "slug": slug.current,
       children[]->{
@@ -57,6 +59,7 @@ export async function getSubcategories(parentTitle) {
     groq`*[_type=="category" && parent->title == $parentTitle]{
       _id,
       title,
+      createdAt,
       "slug": slug.current
     }`,
     { parentTitle }

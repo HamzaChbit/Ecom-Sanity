@@ -127,8 +127,8 @@ export default function CategoryPage({ params }) {
                 onChange={(e) => setSortBy(e.target.value)}
                 className="w-full px-2 py-1 border border-gray-300 rounded-md"
               >
-                {/* <option value="latest">Latest</option>
-                <option value="oldest">Oldest</option> */}
+                <option value="latest">Latest</option>
+                <option value="oldest">Oldest</option>
                 <option value="highest">Most Expensive</option>
                 <option value="lowest">Lowest Price</option>
               </select>

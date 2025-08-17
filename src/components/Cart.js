@@ -152,18 +152,7 @@ const onSubmit = async (e) => {
       toast.success("Order placed successfully");
 
 
-// const message = cart.map(p => {
-//   const finalPrice = p.discount
-//     ? p.price - (p.price * p.discount / 100)
-//     : p.price;
 
-//   return `
-// ${p.name} x ${p.quantity} = $${(finalPrice * p.quantity).toFixed(2)}
-// ${p.color ? `Color: ${p.color}` : ""}
-// ${p.url ?? ""}
-// ${p.image ?? ""}
-//   `;
-// }).join("\n\n");
 const messageItems = cart.map(p => {
           const finalPrice = p.discount ? p.price - (p.price * p.discount / 100) : p.price;
           const colorInfo = p.color ? `\n   - Color: ${p.color}` : "";
@@ -173,7 +162,7 @@ const messageItems = cart.map(p => {
 }).join("\n\n");
 
 
-      // const finalMessage = `New Order:\nEmail: ${email}\nAddress: ${address}, ${city}, ${zipCode}, ${country}\n\nItems:\n${message}\n\nTotal: $${cartTotal.toFixed(2)}`;
+  
 const finalMessage = `🛒 Nouvelle commande: 
 👤 Client: ${firstName} ${lastName}
 📞 Téléphone: ${phone}
@@ -191,7 +180,7 @@ ${messageItems}
       // window.open(whatsappURL, "_blank");
 
         // openWhatsApp(finalMessage);
-      const whatsappURL = `https://wa.me/21269497110?text=${encodeURIComponent(finalMessage)}`;
+      const whatsappURL = `https://wa.me/212694977110?text=${encodeURIComponent(finalMessage)}`;
 window.open(whatsappURL, "_blank");
 
 
