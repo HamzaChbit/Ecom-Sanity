@@ -20,6 +20,7 @@ export async function getProductBySlug(slug) {
       createdAt,
       name,
       slug,
+      specs,
       description,
       price,
        discount,
@@ -59,6 +60,7 @@ export async function getProductsByCategorySlug(slug) {
       name,
       price,
        discount,
+      specs,
       "image": image.asset->url,
       "slug": slug.current,
       parentCategory->{
@@ -102,6 +104,7 @@ export async function getProductsByBrandSlug(slug) {
       name,
       price,
        discount,
+       specs,
       "image": image.asset->url,
       "slug": slug.current,
       parentCategory->{
@@ -132,6 +135,7 @@ export async function getFeaturedProducts() {
       "image": image.asset->url,
       price,
       discount,
+      specs,
       description,
       category->{title, slug}
     } | order(createdAt desc)`
@@ -151,6 +155,7 @@ export async function getProducts() {
       price,
       category,
        discount,
+       specs,
       "image": image.asset->url,
       "slug": slug.current,
       "extraImages": extraImages[].asset->url,

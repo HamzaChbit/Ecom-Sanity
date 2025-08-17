@@ -1,8 +1,9 @@
+import Comments from "@/src/components/Comments";
 import Details from "@/src/components/Details";
 import { getProductBySlug } from "@/src/sanity/product-util";
 
 
-
+export const revalidate = 10;
 export default async  function Page({ params }) {
   const { slug } = params;
 
@@ -25,7 +26,7 @@ export default async  function Page({ params }) {
 
       <div className="mb-20">
       {product && <Details product={product[0]} />} 
-      {/* <Comments  product={product[0]}/> */}
+      <Comments  product={product[0]}/>
       </div>
   
     </div>

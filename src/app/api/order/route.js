@@ -1,16 +1,16 @@
 import { createOrder } from "@/src/sanity/order-util";
 import { NextResponse } from "next/server";
 
-
 export async function POST(req) {
   try {
-    const { email, cart, address, city, zipCode, country } = await req.json();
+    const { firstName, lastName, phone, email, cart, address } = await req.json();
 
-    if ( !cart?.length || !address || !city || !zipCode || !country || !email) {
+    if (!firstName || !lastName || !phone || !email || !cart?.length || !address) {
       return NextResponse.json({ message: "Please fill all fields" }, { status: 400 });
     }
 
-    const createdOrders = await createOrder(email, cart, address, city, zipCode, country);
+    // ديال sanity → خاصك تحدثو حتى هو باش يقبل هاد الحقول
+    const createdOrders = await createOrder(firstName, lastName, phone, email, cart, address);
 
     return NextResponse.json(
       { message: "Order created successfully", orders: createdOrders },

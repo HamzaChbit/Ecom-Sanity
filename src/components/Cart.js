@@ -6,11 +6,12 @@ import { FaTrash } from 'react-icons/fa';
 import Link from 'next/link';
 import axios from 'axios';
 
-
+import 'react-international-phone/style.css';
 
 import toast from 'react-hot-toast';
 
 import { useRouter } from 'next/navigation';
+import { PhoneInput } from 'react-international-phone';
 
 
 function Cart() {
@@ -22,10 +23,9 @@ function Cart() {
   const router = useRouter()
  const [email, setEmail] = useState('');
   const [address, setAddress] = useState('');
-  const [city, setCity] = useState('');
-  const [zipCode, setZipCode] = useState('');
-  const [country, setCountry] = useState('');
-
+const [firstName, setFirstName] = useState('');
+  const [lastName, setLastName] = useState('');
+  const [phone, setPhone] = useState('');
   const handleRemoveFromCart = (productId) => {
     removeFromCart(productId);
   };
@@ -123,39 +123,83 @@ function Cart() {
 const onSubmit = async (e) => {
   e.preventDefault();
 
-  if (!email || !address || !city || !zipCode || !country) {
-    toast.error("Please fill all fields");
-    return;
-  }
+  if (!firstName || !lastName || !phone || !email || !address) {
+      toast.error("Veuillez remplir tous les champs");
+      return;
+    }
+
+        if (!(phone.length === 9 || phone.length === 13 || phone.length === 12 || phone.length === 10 || phone.length === 11 || phone.length === 8 || phone.length === 14 || phone.length === 15))
+      return toast.error('Please enter a valid telephone number');
+
+
 
   try {
     setLoading(true);
 
     // بعث البيانات مباشرة لل API order
     const response = await axios.post("/api/order", {
-      cart,
-      address,
-      city,
-      email,
-      zipCode,
-      country,
+      
+    cart,
+    firstName,
+    lastName,
+    phone,
+    email,
+    address,
     });
 
     if (response.status === 200) {
       cart.forEach(product => removeFromCart(product._id));
       toast.success("Order placed successfully");
 
-      // بناء رسالة WhatsApp مع صورة و رابط المنتج
-      const message = cart.map(p => {
-        const finalPrice = p.discount ? p.price - (p.price * p.discount / 100) : p.price;
-        return `${p.name} x ${p.quantity} = $${(finalPrice * p.quantity).toFixed(2)}\n${p.url}\n${p.image}`;
-      }).join("\n\n");
 
-      const finalMessage = `New Order:\nEmail: ${email}\nAddress: ${address}, ${city}, ${zipCode}, ${country}\n\nItems:\n${message}\n\nTotal: $${cartTotal.toFixed(2)}`;
+// const message = cart.map(p => {
+//   const finalPrice = p.discount
+//     ? p.price - (p.price * p.discount / 100)
+//     : p.price;
 
-      // فتح WhatsApp
-      const whatsappURL = `https://wa.me/212694977110?text=${encodeURIComponent(finalMessage)}`;
-      window.open(whatsappURL, "_blank");
+//   return `
+// ${p.name} x ${p.quantity} = $${(finalPrice * p.quantity).toFixed(2)}
+// ${p.color ? `Color: ${p.color}` : ""}
+// ${p.url ?? ""}
+// ${p.image ?? ""}
+//   `;
+// }).join("\n\n");
+const messageItems = cart.map(p => {
+          const finalPrice = p.discount ? p.price - (p.price * p.discount / 100) : p.price;
+          const colorInfo = p.color ? `\n   - Color: ${p.color}` : "";
+           const urlInfo = p.url ? `\n   - URL: ${p.url}` : "";
+  const imageInfo = p.image ? `\n   - Image: ${p.image}` : "";
+        return `*${p.name}*\n   - Quantity: ${p.quantity}\n   - Price: $${(finalPrice * p.quantity).toFixed(2)}${colorInfo}${urlInfo}${imageInfo}`;
+}).join("\n\n");
+
+
+      // const finalMessage = `New Order:\nEmail: ${email}\nAddress: ${address}, ${city}, ${zipCode}, ${country}\n\nItems:\n${message}\n\nTotal: $${cartTotal.toFixed(2)}`;
+const finalMessage = `🛒 Nouvelle commande: 
+👤 Client: ${firstName} ${lastName}
+📞 Téléphone: ${phone}
+📧 Email: ${email}
+🏠 Adresse: ${address}
+
+📦 Articles:
+${messageItems}
+
+💰 Total: $${cartTotal.toFixed(2)}`;
+
+       
+      //WhatsApp
+      // const whatsappURL = `https://wa.me/21269497110?text=${encodeURIComponent(finalMessage)}`;
+      // window.open(whatsappURL, "_blank");
+
+        // openWhatsApp(finalMessage);
+      const whatsappURL = `https://wa.me/21269497110?text=${encodeURIComponent(finalMessage)}`;
+window.open(whatsappURL, "_blank");
+
+
+
+
+
+
+
 
     } else {
       toast.error("Failed to place order");
@@ -244,46 +288,78 @@ const onSubmit = async (e) => {
 <div className="mt-4 text-[#5B20B6]  ">
 
 {cartTotal > 0 && (
+  <form onSubmit={onSubmit} className=''>
+    {/* Nom & Prénom */}
+    <div className='flex md:flex-row flex-col justify-around'>
+      <input
+        className="px-5 py-2 my-2 w-full bg-gray-100"
+        type="text"
+        value={firstName}
+        onChange={(e) => setFirstName(e.target.value)}
+        placeholder="Prénom"
+        required
+      />
+      <input
+        className="px-5 py-2 my-2 w-full bg-gray-100 mx-2"
+        type="text"
+        value={lastName}
+        onChange={(e) => setLastName(e.target.value)}
+        placeholder="Nom"
+        required
+      />
+    </div>
 
+    {/* Adresse */}
+    <div className='flex md:flex-row flex-col justify-around'>
+      <input
+        className='px-5 py-2 my-2 w-full mx-2 bg-gray-100'
+        type="text"
+        value={address}
+        onChange={(e) => setAddress(e.target.value)}
+        placeholder="Adresse et ville"
+        required
+      />
+    </div>
 
-        <form  onSubmit={onSubmit} className='' >
-             <div className='flex md:flex-row flex-col justify-around' >
-          <input
-            className="px-5 py-2 my-2 w-full bg-gray-100"
-            type="email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            placeholder="Your Email"
-            required
-          /></div>
-          <div className='flex md:flex-row flex-col justify-around' >
-                   <input className='px-5 py-2 my-2 w-full  mx-2 bg-gray-100' 
-                    type="text"
-                     value={address} 
-                     onChange={(e) => setAddress(e.target.value)} 
-                     placeholder="Address" 
-                     required />
-          <input className='px-5  py-2 my-2 mx-2 w-full bg-gray-100' type="text" value={city} onChange={(e) => setCity(e.target.value)} placeholder="City" required />
-          </div>
-          <div className='flex md:flex-row flex-col  justify-around ' >
-<input className='px-5 my-2  py-2 mx-2 bg-gray-100 w-full' type="number" value={zipCode} onChange={(e) => setZipCode(e.target.value)} placeholder="Zip Code" required />
-          <input className='px-5  py-2 my-2 mx-2 bg-gray-100 w-full' type="text" value={country} onChange={(e) => setCountry(e.target.value)} placeholder="Country" required />
-          </div>
-         
-   
-          <div  className='max-w-sm mx-auto space-y-4' >
-
-           <button type="submit" disabled={loading}   className="text-lg w-full font-semibold text-center mr-4 bg-[#5B20B6]  text-white py-2 px-4 rounded hover:text-[#5B20B6] hover:bg-white border border-[#5B20B6]">
-          {
-                  loading ? "Loading..." : "Pay"
-                }
-          </button>
-          </div>
-
+    {/* Numéro téléphone */}
+    <div className='flex md:flex-row flex-col justify-around'>
+      <input
+        className='px-5 py-2 my-2 w-full mx-2 bg-gray-100'
+        type="numvber"
+        value={phone}
+        onChange={(e) => setPhone(e.target.value)}
+        placeholder="Numéro de téléphone"
+        required
+      />
+    </div>
     
-       
-        </form>
-      )}
+
+
+    {/* Email */}
+    <div className='flex md:flex-row flex-col justify-around'>
+      <input
+        className="px-5 py-2 my-2 w-full bg-gray-100"
+        type="email"
+        value={email}
+        onChange={(e) => setEmail(e.target.value)}
+        placeholder="Email"
+        required
+      />
+    </div>
+
+    {/* Submit */}
+    <div className='max-w-sm mx-auto space-y-4'>
+      <button
+        type="submit"
+        disabled={loading}
+        className="text-lg w-full font-semibold text-center mr-4 bg-[#5B20B6] text-white py-2 px-4 rounded hover:text-[#5B20B6] hover:bg-white border border-[#5B20B6]"
+      >
+        {loading ? "Loading..." : "Commander"}
+      </button>
+    </div>
+  </form>
+)}
+
 
 
 

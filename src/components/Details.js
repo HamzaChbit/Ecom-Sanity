@@ -102,7 +102,40 @@ function Details({ product }) {
         {/* Right Column: Details */}
         <div className="flex flex-col p-6 justify-center">
           <h1 className="text-3xl font-semibold text-[#5B20B6]">{product?.name}</h1>
-          <p className="text-lg text-gray-500 mt-4">{product?.description}</p>
+          {/* {product?.description && (
+        <p className="text-lg text-gray-700 mb-4">{product.description}</p>
+      )}
+     {product?.specs && product.specs.length > 0 && (
+        <ul className="text-gray-700 list-disc pl-5 space-y-1">
+          {product.specs.map((spec, index) => (
+            <li key={index}>
+              {spec.value}
+            </li>
+          ))}
+        </ul>
+      )} */}
+
+
+      {product?.specs && product.specs.length > 0 ? (
+        <ul className="text-gray-700 list-disc pl-5 space-y-1">
+          {product.specs.map((spec, index) => (
+            <li key={index}>
+              {spec.value}
+            </li>
+          ))}
+        </ul>
+      ) : (
+        // Sinon affiche description courte
+        <p className="text-lg text-gray-700 mb-2">{product?.description}</p>
+      )}
+
+
+
+
+
+
+
+
 
           {/* Color Selection */}
           {product?.colors && product.colors.length > 0 && (
@@ -128,8 +161,12 @@ function Details({ product }) {
                           className={`w-8 h-8 rounded-full cursor-pointer ${bgColorClass} ${selectedColor === color ? 'ring-2 ring-offset-2 ring-[#5b20b6]' : ''}`}
                         ></div>
                     );
+
+
+
                 })}
               </div>
+           
             </div>
           )}
 
@@ -168,8 +205,10 @@ function Details({ product }) {
               Add to Cart
             </button>
           </div>
+           
         </div>
       </div>
+        
     </div>
   );
 }

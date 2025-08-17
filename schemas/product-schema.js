@@ -102,8 +102,27 @@ const product = {
       name: "description",
       title: "Description",
       type: "text",
-      validation: (Rule) => Rule.required(),
+      
     },
+
+    {
+  name: 'specs',
+  title: 'Specifications',
+  type: 'array',
+  of: [
+    {
+      type: 'object',
+      fields: [
+        { name: 'name', title: 'Spec Name', type: 'string' },
+        { name: 'value', title: 'Spec Value', type: 'string' }
+      ]
+    }
+  ]
+},
+
+
+
+
     {
       name: "price",
       title: "Price",
