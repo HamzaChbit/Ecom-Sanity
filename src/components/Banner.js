@@ -12,7 +12,7 @@ function Banner() {
         animate={{ opacity: 1 }} 
         transition={{ duration: 0.5 }}
         // === BACKGROUND Jdid HNA ===
-        className="relative w-full h-[50vh] md:h-[60vh] bg-[url('/sky-banner.jpg')] bg-cover bg-center bg-no-repeat rounded-lg shadow-xl overflow-hidden"
+        className="relative w-full h-[50vh] md:h-[60vh] bg-[url('/sky-banne.png')] bg-cover bg-center bg-no-repeat rounded-lg shadow-xl overflow-hidden"
       >
         {/* Zedt wa7d l'overlay k7el chfaf (transparent) bach l'ktaba tban mzyan foq tasswira */}
         <div className="absolute inset-0 bg-black/30"></div>
