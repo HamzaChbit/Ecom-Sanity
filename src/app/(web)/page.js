@@ -9,15 +9,14 @@ export default async function Home() {
 
   return (
     <div>
-      <div className="flex flex-col items-center justify-center mt-10 space-y-4">
+      {/* <div className="flex flex-col items-center justify-center mt-10 space-y-4">
         <h1 className="text-4xl font-bold text-[#5B20B6] text-center">
           Get the Best Gadgets at TechTrove!
         </h1>
-      </div>
+      </div> */}
 
-      <div className="flex flex-col items-center justify-center mt-10 space-y-4">
         <Banner />
-      </div>
+   
 
       {/* HAD L'BLASSA LI Tbeddlat */}
       <div className="max-w-7xl mx-auto flex flex-col items-center justify-center mt-10 space-y-4">

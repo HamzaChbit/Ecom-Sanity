@@ -102,7 +102,7 @@ function Header() {
         <div className="max-w-7xl mx-auto flex justify-between items-center">
           <Link href="/" onClick={closeAllMenus} className="flex items-center flex-shrink-0">
             {/* <img src="/logo.png" alt="logo" width={40} height={40} /> */}
-            <h1 className="ml-2 text-xl lg:text-3xl font-bold text-gray-800">DESKTOPPLUS</h1>
+            <h1 className="ml-2 text-xl lg:text-3xl text-gray-800">DESKTOPPLUS</h1>
           </Link>
 
           <div className="flex-grow flex justify-center">
