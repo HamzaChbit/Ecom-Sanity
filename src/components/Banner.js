@@ -58,7 +58,8 @@ function Banner() {
                   height={500}
                   alt="Laptop"
                   className="w-full h-full object-cover max-w-md"
-                  priority={true}
+                  
+                   priority
                 />
              </div>
           </div>

@@ -144,22 +144,7 @@ window.open(whatsappURL, "_blank");
             <th className="py-2 px-4">Remove</th>
           </tr>
         </thead>
-        {/* <tbody>
-          {cart.map((product) => (
-            
-            <tr key={product.id} className="hover:bg-gray-50 text-center border-b border-gray-300 text-amber-500 ">
-              <td className="py-2 px-4 flex items-center md:flex-row flex-col">
-                <img className='mr-2' src={product?.image} width={50} height={30} alt="art" />
-   <h1>{truncateString(product?.name,35)}</h1> 
-              </td>
-              <td className="py-2 px-4">{product?.quantity}</td>
-              <td className="py-2 px-4">${(product?.price * product?.quantity).toFixed(2)}</td>
-              <td className="py-2 px-4">
-                <FaTrash onClick={() => { handleRemoveFromCart(product?._id) }} className="text-amber-500 mx-auto cursor-pointer" />
-              </td>
-            </tr>
-          ))}
-        </tbody> */}
+  
         <tbody>
   {cart.map((product) => {
     const finalPrice = product.discount 

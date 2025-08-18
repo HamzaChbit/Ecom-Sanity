@@ -79,34 +79,15 @@ export async function getProductsByCategorySlug(slug) {
   );
 }
 
-// export async function getProductsByCategorySlug(slug) {
-//   return client.fetch(
-//     groq`*[_type == "product" && category->slug.current == $slug]{
-//       _id,
-//       name,
-//       price,
-//       "image": image.asset->url,
-//       "slug": slug.current,
-//       category->{
-//         _id,
-//         title,
-//         "slug": slug.current
-//       }
-//     }`,
-//     { slug }
-//   );
-// }
-
-
 export async function getProductsByBrandSlug(slug) {
   return client.fetch(
     groq`*[_type == "product" && brandCategory->slug.current == $slug && archived != true]{
       _id,
       name,
       price,
-       discount,
-       createdAt,
-       specs,
+      discount,
+      _createdAt, // Changed from createdAt to _createdAt for Sanity's timestamp
+      specs,
       "image": image.asset->url,
       "slug": slug.current,
       parentCategory->{
@@ -114,7 +95,8 @@ export async function getProductsByBrandSlug(slug) {
         title,
         "slug": slug.current
       },
-      brandCategory->{
+      // This line is the only change needed
+      "brand": brandCategory->{
         _id,
         title,
         "slug": slug.current
@@ -123,6 +105,33 @@ export async function getProductsByBrandSlug(slug) {
     { slug }
   );
 }
+
+
+// export async function getProductsByBrandSlug(slug) {
+//   return client.fetch(
+//     groq`*[_type == "product" && brandCategory->slug.current == $slug && archived != true]{
+//       _id,
+//       name,
+//       price,
+//        discount,
+//        createdAt,
+//        specs,
+//       "image": image.asset->url,
+//       "slug": slug.current,
+//       parentCategory->{
+//         _id,
+//         title,
+//         "slug": slug.current
+//       },
+//       brandCategory->{
+//         _id,
+//         title,
+//         "slug": slug.current
+//       }
+//     }`,
+//     { slug }
+//   );
+// }
 
 
 

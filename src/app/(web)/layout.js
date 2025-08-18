@@ -8,8 +8,12 @@ import Footer from "@/src/components/Footer";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata = {
-  title: 'DESKTOPPLUS',
-  description: 'Explore the latest in technology and elevate your lifestyle with cutting-edge gadgets. ',
+  // Using a title object for more powerful SEO
+  title: {
+    default: "DESKTOPPLUS | Laptops & Tech in Agadir, Morocco", // Title for the homepage
+    template: "%s | DESKTOPPLUS", // Template for all other pages
+  },
+  description: "Explore the latest in technology and elevate your lifestyle with cutting-edge gadgets from DESKTOPPLUS. High-quality laptops and IT equipment delivered across Morocco.",
 };
 
 export default function RootLayout({ children }) {
@@ -18,7 +22,6 @@ export default function RootLayout({ children }) {
       <body className={inter.className}>
         <ToastProvider />
         
-        {/* This wrapper fixes the footer positioning issue */}
         <div className="flex flex-col min-h-screen">
           <Header />
           <main className="flex-grow">

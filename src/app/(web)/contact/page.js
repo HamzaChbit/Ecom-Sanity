@@ -1,16 +1,17 @@
 import Contact from "@/src/components/Contact"
 
+// Static metadata for the Contact Us page
+export const metadata = {
+  title: "Contact Us | DESKTOPPLUS",
+  description: "Get in touch with DESKTOPPLUS for support, sales inquiries, or any other questions. We are located in Agadir, Morocco.",
+};
 
-
-
-function page() {
+function ContactPage() {
   return (
     <div>
-    
-        <Contact/>
+      <Contact/>
     </div>
-    
   )
 }
 
-export default page
+export default ContactPage
