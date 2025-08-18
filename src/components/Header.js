@@ -183,12 +183,12 @@ function Header() {
             transition={{ duration: 0.3, ease: "easeInOut" }}
             className="md:hidden overflow-hidden border-b border-gray-200 bg-white"
           >
-            <div className="p-4">
+            <div className="p-4 flex flex-col gap-">
               <NavLinks isMobile={true}/>
               <Link
                 href="/contact"
                 onClick={closeAllMenus}
-                className="w-full text-left rounded-md mt-4 px-3 py-2 text-base font-medium text-gray-600 transition-colors hover:bg-gray-100 hover:text-amber-500"
+                className="w-full text-left rounded-md mt-4 px-3 py-4 text-base font-medium text-gray-600 transition-colors hover:bg-gray-100 hover:text-amber-500"
               >
                 Contact
               </Link>
