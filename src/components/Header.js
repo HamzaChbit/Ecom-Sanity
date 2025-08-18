@@ -5,8 +5,8 @@ import Link from 'next/link';
 import { useEffect, useState } from "react";
 import useCartStore from "@/cartStore";
 import { getParentCategories, getSubcategories } from "../sanity/category-util";
-// 1. Import motion and AnimatePresence from Framer Motion
 import { motion, AnimatePresence } from "framer-motion";
+import Image from "next/image";
 
 function Header() {
   const totalItems = useCartStore((state) => state.totalItems);
@@ -44,7 +44,6 @@ function Header() {
     setIsMobileMenuOpen(false);
   }
 
-  // 2. Define animation variants for the dropdown menu
   const dropdownVariants = {
     hidden: { opacity: 0, scale: 0.95, y: -10 },
     visible: { opacity: 1, scale: 1, y: 0, transition: { duration: 0.2, ease: "easeOut" } },
@@ -58,10 +57,9 @@ function Header() {
           <button
             type="button"
             onClick={() => handleToggle(cat.slug)}
-            className="flex w-full items-center justify-between gap-1.5 rounded-md px-3 py-2 text-base font-medium text-gray-600 transition-colors hover:bg-gray-100 hover:text-[#5B20B6]"
+            className="flex w-full items-center justify-between gap-1.5 rounded-md px-3 py-2 text-base font-medium text-gray-600 transition-colors hover:bg-gray-100 hover:text-amber-500"
           >
             {cat.title}
-            {/* 3. Animate the chevron icon rotation */}
             <motion.svg
               xmlns="http://www.w3.org/2000/svg"
               viewBox="0 0 20 20"
@@ -74,10 +72,8 @@ function Header() {
             </motion.svg>
           </button>
 
-          {/* 4. Use AnimatePresence to enable exit animations */}
           <AnimatePresence>
             {openMenu === cat.slug && (
-              // 5. Replace div with motion.div and apply variants
               <motion.div
                 initial="hidden"
                 animate="visible"
@@ -89,7 +85,7 @@ function Header() {
                     <Link
                       href={`/category/${cat.slug}`}
                       onClick={closeAllMenus}
-                      className="block rounded-md px-3 py-2 text-sm font-semibold text-gray-700 transition-colors hover:bg-gray-100 hover:text-[#5B20B6]"
+                      className="block rounded-md px-3 py-2 text-sm font-semibold text-gray-700 transition-colors hover:bg-gray-100 hover:text-amber-500"
                     >
                       All {cat.title}
                     </Link>
@@ -101,7 +97,7 @@ function Header() {
                         key={sub._id}
                         href={`/brand/${sub.slug}`}
                         onClick={closeAllMenus}
-                        className="block rounded-md px-3 py-2 text-sm font-medium text-gray-500 transition-colors hover:bg-gray-50 hover:text-[#5B20B6]"
+                        className="block rounded-md px-3 py-2 text-sm font-medium text-gray-500 transition-colors hover:bg-gray-50 hover:text-amber-500"
                       >
                         {sub.title}
                       </Link>
@@ -117,10 +113,19 @@ function Header() {
 
   return (
     <header className="sticky top-0 z-40 bg-white/80 backdrop-blur-md shadow-sm" >
-      <div className="p-4 border-b-2 border-gray-100">
+      <div className="p-4 border-b border-gray-200">
         <div className="max-w-7xl mx-auto flex justify-between items-center">
           <Link href="/" onClick={closeAllMenus} className="flex items-center flex-shrink-0">
-            <h1 className="ml-2 text-xl lg:text-3xl text-gray-800">DESKTOP<span className="text-[#5B20B6]">PLUS</span>  </h1>
+            {/* <h1 className="ml-2 text-xl lg:text-3xl text-gray-800">DESKTOP<span className="text-amber-500">PLUS</span></h1> */}
+
+       <Image
+          src="/logo-v1.png" // Path to your logo in the public folder
+          alt="DESKTOPPLUS Logo"
+          width={80}   // Set a suitable width
+          height={80}  // Set a suitable height
+        />
+
+
           </Link>
 
           <div className="flex-grow flex justify-center">
@@ -128,7 +133,7 @@ function Header() {
             <Link
               href="/contact"
               onClick={closeAllMenus}
-              className="hidden md:block rounded-md px-3 py-2 text-base font-medium text-gray-600 transition-colors hover:bg-gray-100 hover:text-[#5B20B6]"
+              className="hidden md:block rounded-md px-3 py-2 text-base font-medium text-gray-600 transition-colors hover:bg-gray-100 hover:text-amber-500"
             >
               Contact
             </Link>
@@ -136,9 +141,8 @@ function Header() {
 
           <div className="flex items-center gap-4">
             <Link href="/cart" onClick={closeAllMenus} className="relative">
-              <FaShoppingCart className="text-3xl text-[#5B20B6] cursor-pointer transition-transform duration-300 hover:scale-110" />
+              <FaShoppingCart className="text-3xl text-amber-500 cursor-pointer transition-transform duration-300 hover:scale-110" />
               {totalItems > 0 && (
-                // Add a little pop animation for the cart count
                 <motion.span
                   initial={{ scale: 0 }}
                   animate={{ scale: 1 }}
@@ -162,7 +166,6 @@ function Header() {
         </div>
       </div>
       
-      {/* 6. Animate the mobile menu container */}
       <AnimatePresence>
         {isMobileMenuOpen && (
           <motion.div
@@ -170,16 +173,14 @@ function Header() {
             animate={{ opacity: 1, height: "auto" }}
             exit={{ opacity: 0, height: 0 }}
             transition={{ duration: 0.3, ease: "easeInOut" }}
-            // Add overflow-hidden to contain content during animation
-            className="md:hidden overflow-hidden border-b-2 border-gray-100 bg-white"
+            className="md:hidden overflow-hidden border-b border-gray-200 bg-white"
           >
-            {/* Add padding here instead of the motion div */}
             <div className="p-4">
               <NavLinks isMobile={true}/>
               <Link
                 href="/contact"
                 onClick={closeAllMenus}
-                className="w-full text-left rounded-md mt-4 px-3 py-2 text-base font-medium text-gray-600 transition-colors hover:bg-gray-100 hover:text-[#5B20B6]"
+                className="w-full text-left rounded-md mt-4 px-3 py-2 text-base font-medium text-gray-600 transition-colors hover:bg-gray-100 hover:text-amber-500"
               >
                 Contact
               </Link>

@@ -12,6 +12,7 @@ import toast from 'react-hot-toast';
 
 import { useRouter } from 'next/navigation';
 import { PhoneInput } from 'react-international-phone';
+import Image from 'next/image';
 
 
 function Cart() {
@@ -31,91 +32,6 @@ const [firstName, setFirstName] = useState('');
   };
  
 
-//   const onSubmit = async (e) => {
-//   e.preventDefault();
-
-//   if (!email || !address || !city || !zipCode || !country) {
-//     toast.error("Please fill all fields");
-//     return;
-//   }
-
-//   try {
-//     setLoading(true);
-
-   
-//     const response = await axios.post("/api/order", {
-     
-//       cart,
-//       address,
-//       city,
-//       email,
-//       zipCode,
-//       country,
-//     });
-
-//     if (response.status === 200) {
-//       cart.forEach(product => removeFromCart(product._id));
-//       toast.success("Order placed successfully");
-//        router.push("/");
-//     } else {
-//       toast.error("Failed to place order 1");
-//     }
-//   } finally {
-//     setLoading(false);
-//   }
-// };
-
-// const onSubmit = async (e) => {
-//   e.preventDefault();
-
-//   if (!email || !address || !city || !zipCode || !country) {
-//     toast.error("Please fill all fields");
-//     return;
-//   }
-
-//   try {
-//     setLoading(true);
-
-//     // بعث البيانات مباشرة لل API order
-//     const response = await axios.post("/api/order", {
-     
-//       cart,
-//       address,
-//       city,
-//       email,
-//       zipCode,
-//       country,
-//     });
-
-//     if (response.status === 200) {
-//       cart.forEach(product => removeFromCart(product._id));
-//       toast.success("Order placed successfully");
-//  const message = `
-// New Order:
-// Email: ${email}
-// Address: ${address}, ${city}, ${zipCode}, ${country}
-
-// Items:
-// ${cart.map(p => {
-//   const finalPrice = p.discount ? p.price - (p.price * p.discount / 100) : p.price;
-//   return `${p.name} x ${p.quantity} = $${(finalPrice * p.quantity).toFixed(2)}`;
-// }).join("\n")}
-
-
-// Total: $${cartTotal.toFixed(2)}
-//       `;
-
-//       // 3️⃣ افتح WhatsApp
-//       const whatsappURL = `https://wa.me/212694977110?text=${encodeURIComponent(message)}`;
-//       window.open(whatsappURL, "_blank");
-
-//     } else {
-//       toast.error("Failed to place order 1");
-//     }
-//   } finally {
-//     setLoading(false);
-//   }
-// };
 
 
 
@@ -216,12 +132,12 @@ window.open(whatsappURL, "_blank");
   //   }
   // }, [cart, router]);
   return (
-    <div className='max-w-3xl mx-auto mt-20'>
-      <h1 className="text-3xl text-center font-semibold text-[#5B20B6] mb-6"> {totalItems} Items in Cart</h1>
+    <div className='max-w-3xl mx-auto  mt-20'>
+      <h1 className="text-3xl text-center font-semibold text-amber-500 mb-6"> {totalItems} <span className='text-black'>Items in Cart</span> </h1>
 
       <table className="w-full border-collapse">
         <thead>
-          <tr className="text-[#5B20B6] border-b border-gray-200">
+          <tr className="text-amber-500 border-b border-gray-200">
             <th className="py-2 px-4">Product</th>
             <th className="py-2 px-4">Quantity</th>
             <th className="py-2 px-4">Price</th>
@@ -231,7 +147,7 @@ window.open(whatsappURL, "_blank");
         {/* <tbody>
           {cart.map((product) => (
             
-            <tr key={product.id} className="hover:bg-gray-50 text-center border-b border-gray-300 text-[#5B20B6] ">
+            <tr key={product.id} className="hover:bg-gray-50 text-center border-b border-gray-300 text-amber-500 ">
               <td className="py-2 px-4 flex items-center md:flex-row flex-col">
                 <img className='mr-2' src={product?.image} width={50} height={30} alt="art" />
    <h1>{truncateString(product?.name,35)}</h1> 
@@ -239,7 +155,7 @@ window.open(whatsappURL, "_blank");
               <td className="py-2 px-4">{product?.quantity}</td>
               <td className="py-2 px-4">${(product?.price * product?.quantity).toFixed(2)}</td>
               <td className="py-2 px-4">
-                <FaTrash onClick={() => { handleRemoveFromCart(product?._id) }} className="text-[#5B20B6] mx-auto cursor-pointer" />
+                <FaTrash onClick={() => { handleRemoveFromCart(product?._id) }} className="text-amber-500 mx-auto cursor-pointer" />
               </td>
             </tr>
           ))}
@@ -251,15 +167,15 @@ window.open(whatsappURL, "_blank");
       : product.price;
 
     return (
-      <tr key={product.id} className="hover:bg-gray-50 text-center border-b border-gray-300 text-[#5B20B6] ">
+      <tr key={product.id} className="hover:bg-gray-50 text-center border-b border-gray-300 text-black ">
         <td className="py-2 px-4 flex items-center md:flex-row flex-col">
-          <img className='mr-2' src={product?.image} width={50} height={30} alt="art" />
+          <Image className='mr-2' src={product?.image} width={50} height={30} alt="art" />
           <h1>{truncateString(product?.name,35)}</h1> 
         </td>
         <td className="py-2 px-4">{product?.quantity}</td>
         <td className="py-2 px-4">${(finalPrice * product?.quantity).toFixed(2)}</td>
         <td className="py-2 px-4">
-          <FaTrash onClick={() => { handleRemoveFromCart(product?._id) }} className="text-[#5B20B6] mx-auto cursor-pointer" />
+          <FaTrash onClick={() => { handleRemoveFromCart(product?._id) }} className="text-red-500 mx-auto cursor-pointer" />
         </td>
       </tr>
     )
@@ -268,13 +184,13 @@ window.open(whatsappURL, "_blank");
 
       </table>
 
-      <div className="mt-4 text-[#5B20B6] ml-auto">
-        <p className="text-lg font-semibold text-right mr-4">Total: ${cartTotal.toFixed(2)}</p>
+      <div className="mt-4 text-black ml-auto">
+        <p className="text-lg font-semibold text-right mr-4">  <span className='text-amber-500'>Total:</span> ${cartTotal.toFixed(2)}</p>
       </div>
 
  
 
-<div className="mt-4 text-[#5B20B6]  ">
+<div className="mt-4 text-black ">
 
 {cartTotal > 0 && (
   <form onSubmit={onSubmit} className=''>
@@ -341,7 +257,7 @@ window.open(whatsappURL, "_blank");
       <button
         type="submit"
         disabled={loading}
-        className="text-lg w-full font-semibold text-center mr-4 bg-[#5B20B6] text-white py-2 px-4 rounded hover:text-[#5B20B6] hover:bg-white border border-[#5B20B6]"
+        className="text-lg w-full font-semibold text-center mr-4 bg-amber-500 hover:bg-amber-600 text-white py-2 px-4 rounded   border-amber-500"
       >
         {loading ? "Loading..." : "Commander"}
       </button>
@@ -354,7 +270,7 @@ window.open(whatsappURL, "_blank");
 
         <div className='max-w-sm mx-auto space-y-4 my-2' >
             <Link className='' href="/">
-                 <button className="text-lg w-full font-semibold text-center mr-4 bg-white hover:bg-[#5B20B6] hover:text-white text-[#5B20B6] border border-[#5B20B6] py-2 px-4 rounded">
+                 <button className="text-lg w-full font-semibold text-center mr-4 bg-white hover:bg-amber-500 hover:text-white text-amber-500 border border-amber-500 py-2 px-4 rounded">
         
             Back to Shopping
          

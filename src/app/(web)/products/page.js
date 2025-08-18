@@ -88,18 +88,18 @@ function Products() {
     <div>
  
 
-      <div className="flex flex-col items-center justify-center mt-10 space-y-4">
-        <h1 className="text-4xl font-bold text-[#5B20B6] text-center"></h1>
+      {/* <div className="flex flex-col items-center justify-center mt-10 space-y-4">
+        <h1 className="text-4xl font-bold text-amber-500 text-center"></h1>
        
-      </div>
+      </div> */}
 
       
 
 
-      <div className="flex flex-col md:flex-row p-10">
+      <div className="flex flex-col md:flex-row p-10 max-w-7xl mx-auto">
         {/* Filters */}
         <motion.div  initial={{y:10,opacity:0}} animate={{y:0,opacity:1}} transition={{duration:0.3,delay:0.4}} className="mr-8">
-          <h1 className="text-2xl font-semibold text-[#5B20B6] mb-4">Filters</h1>
+          <h1 className="text-2xl font-semibold text-amber-500 mb-4">Filters</h1>
           <div className="space-y-4">
              {/* Search Input */}
              <div className="space-y-2">
@@ -138,14 +138,14 @@ function Products() {
                 <select
                   value={sortBy}
                   onChange={(e) => setSortBy(e.target.value)}
-                  className="block appearance-none w-full bg-white border border-gray-300 py-2 px-4 pr-8 rounded-md leading-tight focus:outline-none focus:border-[#5B20B6]"
+                  className="block appearance-none w-full bg-white border border-gray-300 py-2 px-4 pr-8 rounded-md leading-tight focus:outline-none focus:border-amber-500"
                 >
                   <option value="latest">Sort by Latest</option>
                   <option value="oldest">Sort by Oldest</option>
                   <option value="highest">Sort by Most Expensive</option>
                   <option value="lowest">Sort by Lowest Price</option>
                 </select>
-                <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-[#5B20B6]">
+                <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-amber-500">
                   <svg
                     className="fill-current h-4 w-4"
                     xmlns="http://www.w3.org/2000/svg"
@@ -163,7 +163,7 @@ function Products() {
                 <select
                   value={productsPerPage}
                   onChange={(e) => setProductsPerPage(e.target.value)}
-                  className="block appearance-none w-full bg-white border border-gray-300 py-2 px-4 pr-8 rounded-md leading-tight focus:outline-none focus:border-[#5B20B6]"
+                  className="block appearance-none w-full bg-white border border-gray-300 py-2 px-4 pr-8 rounded-md leading-tight focus:outline-none focus:border-amber-500"
                 >
                   <option value="1">1 Product Per Page</option>
                   <option value="3">3 Products Per Page</option>
@@ -173,7 +173,7 @@ function Products() {
                   <option value="20">20 Products Per Page</option>
                   <option value="25">25 Products Per Page</option>
                 </select>
-                <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-[#5B20B6]">
+                <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-amber-500">
                   <svg
                     className="fill-current h-4 w-4"
                     xmlns="http://www.w3.org/2000/svg"
@@ -188,7 +188,7 @@ function Products() {
 
              <button
                 onClick={resetFilters}
-                className="bg-[#5B20B6] mt-4 text-white px-4 py-2 rounded-md"
+                className="bg-amber-500 mt-4 text-white px-4 py-2 rounded-md"
               >
                 Reset
               </button>

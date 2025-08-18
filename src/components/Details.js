@@ -47,7 +47,7 @@ function Details({ product }) {
         {/* Left Column: Images */}
         <div>
           {/* Main Image Container */}
-          <div className="shadow-md relative h-96 md:h-[500px] overflow-hidden rounded-lg flex items-center justify-center">
+          <div className="shadow-md relative h-96 md:h-[500px] overflow-hidden rounded-lg flex items-center justify-center bg-white">
             
             {/* Discount Badge */}
             {product?.discount && (
@@ -57,7 +57,7 @@ function Details({ product }) {
             )}
             
             <Image 
-              className='object-contain w-full h-full'
+              className='object-contain w-full h-full p-4'
               src={selectedImage || product?.image}
               width={500} 
               height={500}
@@ -71,12 +71,12 @@ function Details({ product }) {
               {/* Main product image thumbnail */}
               <li 
                 onClick={() => setSelectedImage(product?.image)} 
-                className={`w-20 h-20 relative rounded-md overflow-hidden cursor-pointer flex-shrink-0 ${selectedImage === product?.image ? "ring-2 ring-offset-2 ring-[#5b20b6]" : ""}`}
+                className={`w-20 h-20 relative rounded-md overflow-hidden cursor-pointer flex-shrink-0 ${selectedImage === product?.image ? "ring-2 ring-offset-2 ring-amber-500" : ""}`}
               >
                 <Image
                   src={product?.image}
-                  layout="fill"
-                  objectFit="cover"
+                  fill
+                  style={{objectFit:"cover"}}
                   alt="Product thumbnail"
                 />
               </li>
@@ -85,12 +85,12 @@ function Details({ product }) {
                 <li 
                   key={index} 
                   onClick={() => setSelectedImage(image)} 
-                  className={`w-20 h-20 relative rounded-md overflow-hidden cursor-pointer flex-shrink-0 ${selectedImage === image ? "ring-2 ring-offset-2 ring-[#5b20b6]" : ""}`}
+                  className={`w-20 h-20 relative rounded-md overflow-hidden cursor-pointer flex-shrink-0 ${selectedImage === image ? "ring-2 ring-offset-2 ring-amber-500" : ""}`}
                 >
                   <Image
                     src={image}
-                    layout="fill"
-                    objectFit="cover"
+                    fill
+                    style={{objectFit:"cover"}}
                     alt={`Product thumbnail ${index + 1}`}
                   />
                 </li>
@@ -101,41 +101,20 @@ function Details({ product }) {
 
         {/* Right Column: Details */}
         <div className="flex flex-col p-6 justify-center">
-          <h1 className="text-3xl font-semibold text-[#5B20B6]">{product?.name}</h1>
-          {/* {product?.description && (
-        <p className="text-lg text-gray-700 mb-4">{product.description}</p>
-      )}
-     {product?.specs && product.specs.length > 0 && (
-        <ul className="text-gray-700 list-disc pl-5 space-y-1">
-          {product.specs.map((spec, index) => (
-            <li key={index}>
-              {spec.value}
-            </li>
-          ))}
-        </ul>
-      )} */}
-
-
-      {product?.specs && product.specs.length > 0 ? (
-        <ul className="text-gray-700 list-disc pl-5 space-y-1">
-          {product.specs.map((spec, index) => (
-            <li key={index}>
-              {spec.value}
-            </li>
-          ))}
-        </ul>
-      ) : (
-        // Sinon affiche description courte
-        <p className="text-lg text-gray-700 mb-2">{product?.description}</p>
-      )}
-
-
-
-
-
-
-
-
+          <h1 className="text-3xl font-semibold text-black">{product?.name}</h1>
+          
+          {/* Display Specs if available, otherwise Description */}
+          <div className="mt-4 text-gray-700">
+            {product?.specs && product.specs.length > 0 ? (
+              <ul className="list-disc pl-5 space-y-1">
+                {product.specs.map((spec, index) => (
+                  <li key={index}>{spec.value}</li>
+                ))}
+              </ul>
+            ) : (
+              <p className="text-lg">{product?.description}</p>
+            )}
+          </div>
 
           {/* Color Selection */}
           {product?.colors && product.colors.length > 0 && (
@@ -143,30 +122,21 @@ function Details({ product }) {
               <h2 className="text-lg font-medium text-gray-700 mb-2">Color:</h2>
               <div className="flex space-x-3">
                 {product.colors.map((color) => {
-                    // Define a mapping for color names to tailwind classes
                     const colorMap = {
-                        'Grey': 'bg-gray-700',
-                        'Black': 'bg-black',
-                        'White': 'bg-white border',
-                        'Blue': 'bg-blue-800',
-                        'Red': 'bg-red-600',
-                        'Green': 'bg-green-600',
+                        'Grey': 'bg-gray-700', 'Black': 'bg-black', 'White': 'bg-white border',
+                        'Blue': 'bg-blue-800', 'Red': 'bg-red-600', 'Green': 'bg-green-600',
                     };
                     const bgColorClass = colorMap[color] || 'bg-gray-300';
                     return (
-                        <div 
-                          key={color} 
-                          onClick={() => setSelectedColor(color)}
-                          title={color}
-                          className={`w-8 h-8 rounded-full cursor-pointer ${bgColorClass} ${selectedColor === color ? 'ring-2 ring-offset-2 ring-[#5b20b6]' : ''}`}
-                        ></div>
+                      <div 
+                        key={color} 
+                        onClick={() => setSelectedColor(color)}
+                        title={color}
+                        className={`w-8 h-8 rounded-full cursor-pointer ${bgColorClass} ${selectedColor === color ? 'ring-2 ring-offset-2 ring-amber-500' : ''}`}
+                      ></div>
                     );
-
-
-
                 })}
               </div>
-           
             </div>
           )}
 
@@ -174,7 +144,7 @@ function Details({ product }) {
           <div className="mt-5">
             {product?.discount ? (
               <div className="flex items-baseline gap-3">
-                <span className="text-[#5B20B6] text-3xl font-bold">
+                <span className="text-amber-500 text-3xl font-bold">
                   ${(product.price - (product.price * product.discount / 100))?.toFixed(2)}
                 </span>
                 <span className="text-gray-400 line-through text-xl font-semibold">
@@ -182,7 +152,7 @@ function Details({ product }) {
                 </span>
               </div>
             ) : (
-              <span className="text-[#5B20B6] text-3xl font-bold">
+              <span className="text-amber-500 text-3xl font-bold">
                 ${product.price?.toFixed(2)}
               </span>
             )}
@@ -198,14 +168,17 @@ function Details({ product }) {
                 value={qty}
                 min="1"
                 onChange={(e) => setQty(Number(e.target.value))}
-                className="w-20 px-3 h-12 text-center border border-gray-300 rounded-md"
+                className="w-20 px-3 h-12 text-center border border-gray-300 rounded-md focus:ring-2 focus:ring-amber-500 focus:border-amber-500"
               />
             </div>
-            <button onClick={handleAddToCart} className="flex-1 bg-[#5B20B6] hover:bg-[#4c1a9c] text-white font-bold px-6 py-3 rounded-md transition-colors duration-300">
+            <button 
+              onClick={handleAddToCart} 
+              className="flex-1 bg-amber-500 hover:bg-amber-600 text-white font-bold px-6 py-3 rounded-md transition-colors duration-300"
+            >
               Add to Cart
             </button>
           </div>
-           
+            
         </div>
       </div>
         

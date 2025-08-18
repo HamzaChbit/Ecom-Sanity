@@ -52,7 +52,7 @@ function Contact() {
           {/* Left Column: Contact Information */}
           <div className='flex flex-col gap-y-4 w-full md:w-2/5'>
             <h1 className='text-4xl font-bold tracking-wide'>
-              <span className='text-[#5B20B6]'>Entrer en </span> Contact
+              <span className='text-amber-500'>Entrer en </span> Contact
             </h1>
             <p className='text-lg text-gray-600 mb-4'>
               Do you have any questions? Please do not hesitate to contact us directly. Our team will come back to you within a matter of hours to help you.
@@ -61,7 +61,7 @@ function Contact() {
 
             <div className='flex flex-col gap-y-6 mt-4'>
               <div className='flex items-center gap-x-5'>
-                <FaMapMarkerAlt size={25} className='text-[#5B20B6]' />
+                <FaMapMarkerAlt size={25} className='text-amber-500' />
                 <div>
                   <h2 className='text-xl font-bold'>Address</h2>
                   <p className='text-gray-700'>DESKTOPPLUS
@@ -71,14 +71,14 @@ function Contact() {
               </div>
 
                   <div className='flex items-center gap-x-3'>
-                        <FaInstagram size={30} className='text-[#5B20B6]' />
+                        <FaInstagram size={30} className='text-amber-500' />
                         <div className='text-left'>
                           <h3 className='text-lg font-semibold'>Instagram</h3>
                           <a 
                             href="https://www.instagram.com/desktopplus/" 
                             target="_blank" 
                             rel="noopener noreferrer"
-                            className='text-gray-600 hover:text-[#5B20B6] hover:underline'
+                            className='text-gray-600 hover:text-amber-500 hover:underline'
                           >
                             @desktopplus
                           </a>
@@ -86,7 +86,7 @@ function Contact() {
                       </div>
 
               <div className='flex items-center gap-x-5'>
-                <FaPhone size={25} className='text-[#5B20B6]' />
+                <FaPhone size={25} className='text-amber-500' />
                 <div>
                   <h2 className='text-xl font-bold'>Phone</h2>
                   <p className='text-gray-700'>+212 0694977110</p>
@@ -103,7 +103,7 @@ function Contact() {
                  type="text"
                  {...register("user_name", { required: "Your name is required." })}
                  placeholder="Enter your name"
-                 className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#5B20B6]"
+                 className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-amber-500"
                />
                {errors.user_name && <span className="text-red-500 text-sm mt-1">{errors.user_name.message}</span>}
              </div>
@@ -114,7 +114,7 @@ function Contact() {
                  type="email"
                  {...register("user_email", { required: "A valid email is required." })}
                  placeholder="Enter your email"
-                 className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#5B20B6]"
+                 className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-amber-500"
                />
                {errors.user_email && <span className="text-red-500 text-sm mt-1">{errors.user_email.message}</span>}
              </div>
@@ -124,7 +124,7 @@ function Contact() {
                <textarea
                  {...register("message", { required: "A message is required." })}
                  placeholder="Enter your message"
-                 className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#5B20B6] resize-none"
+                 className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-amber-500 resize-none"
                  rows="5"
                />
                {errors.message && <span className="text-red-500 text-sm mt-1">{errors.message.message}</span>}
@@ -133,7 +133,7 @@ function Contact() {
              <button
                type="submit"
                disabled={isLoading}
-               className="w-full bg-[#5B20B6] text-white font-bold px-6 py-3 rounded-md hover:bg-[#4C1D95] focus:outline-none transition-colors duration-300 disabled:bg-gray-400"
+               className="w-full bg-amber-500 text-white font-bold px-6 py-3 rounded-md hover:bg-[#4C1D95] focus:outline-none transition-colors duration-300 disabled:bg-gray-400"
              >
                {isLoading ? 'Sending...' : 'Send Message'}
              </button>

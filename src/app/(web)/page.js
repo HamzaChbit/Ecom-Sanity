@@ -1,6 +1,12 @@
 import Banner from "@/src/components/Banner";
-import FeaturedRoom from "@/src/components/FeaturedRoom";
 import { getFeaturedProducts } from "@/src/sanity/product-util";
+import dynamic from 'next/dynamic'; // 1. Import dynamic
+
+// 2. Dynamically import FeaturedRoom with SSR disabled
+const FeaturedRoom = dynamic(
+  () => import('@/src/components/FeaturedRoom'),
+  { ssr: false }
+);
 
 export const revalidate = 10;
 
@@ -9,22 +15,15 @@ export default async function Home() {
 
   return (
     <div>
-      {/* <div className="flex flex-col items-center justify-center mt-10 space-y-4">
-        <h1 className="text-4xl font-bold text-[#5B20B6] text-center">
-          Get the Best Gadgets at TechTrove!
-        </h1>
-      </div> */}
+      <Banner />
 
-        <Banner />
-   
-
-      {/* HAD L'BLASSA LI Tbeddlat */}
       <div className="max-w-7xl mx-auto flex flex-col items-center justify-center mt-10 space-y-4">
-        <h1 className="text-4xl font-bold text-[#5B20B6] text-center">
-          Featured Products
+        <h1 className="text-4xl font-bold text-amber-400 text-center">
+          Produits populaires
         </h1>
       </div>
 
+      {/* 3. Use the dynamic component as usual */}
       <FeaturedRoom featuredRoom={featuredRoom} />
     </div>
   );

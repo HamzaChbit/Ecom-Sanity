@@ -91,7 +91,7 @@ export default function CategoryPage({ params }) {
             transition={{ duration: 0.3, delay: 0.4 }}
             className="mr-8 w-full md:w-1/4"
           >
-            <h1 className="text-2xl font-semibold text-[#5B20B6] mb-4">
+            <h1 className="text-2xl font-semibold text-amber-500 mb-4">
               Filters
             </h1>
 
@@ -153,11 +153,15 @@ export default function CategoryPage({ params }) {
             {/* Reset */}
             <button
               onClick={resetFilters}
-              className="bg-[#5B20B6] text-white px-4 py-2 rounded-md"
+              className="bg-amber-500 text-white px-4 py-2 rounded-md"
             >
               Reset
             </button>
+
+
+
           </motion.div>
+     
 
           {/* Products */}
           <div className="flex-1 my-2">
@@ -182,7 +186,7 @@ export default function CategoryPage({ params }) {
                       onClick={() => paginate(index + 1)}
                       className={`px-3 py-2 rounded-md ${
                         currentPage === index + 1
-                          ? "bg-[#5B20B6] text-white"
+                          ? "bg-amber-500 text-white"
                           : "bg-gray-200 hover:bg-gray-300"
                       }`}
                     >

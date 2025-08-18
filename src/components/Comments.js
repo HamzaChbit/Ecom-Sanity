@@ -55,7 +55,7 @@ function Comments({ product }) {
 
   return (
     <div className="max-w-7xl md:mx-auto mx-2 mt-20 mb:mx-1">
-      <h2 className="text-2xl font-bold mb-4">Comments</h2>
+      <h2 className=" md:text-3xl   text-2xl font-bold mb-4">Comments</h2>
 
       {/* Star Rating */}
       <div className="flex items-center space-x-2 mb-4">
