@@ -3,8 +3,8 @@ import React from 'react';
 import { motion } from 'framer-motion';
 // Icons li ghan7tajo
 
-// S7I7 (CORRECT)
-import { FaMapMarkerAlt, FaPhone } from 'react-icons/fa';
+// 1. Import FaInstagram icon
+import { FaMapMarkerAlt, FaPhone, FaInstagram } from 'react-icons/fa';
 import { MdOutlineEmail } from 'react-icons/md';
 import Link from 'next/link';
 
@@ -30,18 +30,18 @@ function Footer() {
                 <FaMapMarkerAlt size={30} className='text-[#5B20B6]' />
                 <div className='text-left'>
                   <h3 className='text-lg font-semibold'>Address</h3>
-                  <p className='text-gray-600'>DESKTOPPLUS, Rue 972, Agadir 80000</p>
+                  <p className='text-gray-600'>N 37 Rue 972 Hay Salam Agadir </p>
                 </div>
               </div>
 
               {/* Email */}
-              <div className='flex items-center gap-x-3'>
+              {/* <div className='flex items-center gap-x-3'>
                 <MdOutlineEmail size={30} className='text-[#5B20B6]' />
                 <div className='text-left'>
                   <h3 className='text-lg font-semibold'>Email</h3>
                   <p className='text-gray-600'>store@gmail.com</p>
                 </div>
-              </div>
+              </div> */}
 
               {/* Phone */}
               <div className='flex items-center gap-x-3'>
@@ -51,6 +51,23 @@ function Footer() {
                   <p className='text-gray-600'>+212 0694977110</p>
                 </div>
               </div>
+
+              {/* 2. Add Instagram Link and Icon */}
+              <div className='flex items-center gap-x-3'>
+                <FaInstagram size={30} className='text-[#5B20B6]' />
+                <div className='text-left'>
+                  <h3 className='text-lg font-semibold'>Instagram</h3>
+                  <a 
+                    href="https://www.instagram.com/desktopplus/" 
+                    target="_blank" 
+                    rel="noopener noreferrer"
+                    className='text-gray-600 hover:text-[#5B20B6] hover:underline'
+                  >
+                    @desktopplus
+                  </a>
+                </div>
+              </div>
+
             </div>
         </div>
 

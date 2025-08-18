@@ -147,6 +147,13 @@ const product = {
   initialValue: false
 },
 
+   {
+      name: "archived",
+      title: "Archived",
+      type: "boolean",
+      description: "Check this box to archive the product (won't show in frontend)",
+      initialValue: false,
+    },
 
 
 

@@ -5,7 +5,7 @@ import emailjs from '@emailjs/browser';
 import toast from 'react-hot-toast';
 import { useForm } from 'react-hook-form';
 // Make sure you have react-icons installed: npm install react-icons
-import { FaMapMarkerAlt, FaPhone } from 'react-icons/fa';
+import { FaInstagram, FaMapMarkerAlt, FaPhone } from 'react-icons/fa';
 import { MdOutlineEmail } from 'react-icons/md';
 
 function Contact() {
@@ -70,13 +70,20 @@ function Contact() {
                 </div>
               </div>
 
-              <div className='flex items-center gap-x-5'>
-                <MdOutlineEmail size={25} className='text-[#5B20B6]' />
-                <div>
-                  <h2 className='text-xl font-bold'>Email</h2>
-                  <p className='text-gray-700'>store@gmail.com</p>
-                </div>
-              </div>
+                  <div className='flex items-center gap-x-3'>
+                        <FaInstagram size={30} className='text-[#5B20B6]' />
+                        <div className='text-left'>
+                          <h3 className='text-lg font-semibold'>Instagram</h3>
+                          <a 
+                            href="https://www.instagram.com/desktopplus/" 
+                            target="_blank" 
+                            rel="noopener noreferrer"
+                            className='text-gray-600 hover:text-[#5B20B6] hover:underline'
+                          >
+                            @desktopplus
+                          </a>
+                        </div>
+                      </div>
 
               <div className='flex items-center gap-x-5'>
                 <FaPhone size={25} className='text-[#5B20B6]' />

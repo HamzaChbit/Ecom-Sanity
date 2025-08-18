@@ -15,7 +15,7 @@ const client = createClient({
 
 export async function getProductBySlug(slug) {
   return client.fetch(
-    groq`*[_type == "product" && slug.current == $slug]{
+    groq`*[_type == "product" && slug.current == $slug && archived != true]{
       _id,
       createdAt,
       name,
@@ -55,7 +55,7 @@ export async function getProductBySlug(slug) {
 // }
 export async function getProductsByCategorySlug(slug) {
   return client.fetch(
-    groq`*[_type == "product" && parentCategory->slug.current == $slug]{
+    groq`*[_type == "product" && parentCategory->slug.current == $slug && archived != true]{
       _id,
       name,
       price,
@@ -100,7 +100,7 @@ export async function getProductsByCategorySlug(slug) {
 
 export async function getProductsByBrandSlug(slug) {
   return client.fetch(
-    groq`*[_type == "product" && brandCategory->slug.current == $slug]{
+    groq`*[_type == "product" && brandCategory->slug.current == $slug && archived != true]{
       _id,
       name,
       price,
@@ -130,7 +130,7 @@ export async function getProductsByBrandSlug(slug) {
 
 export async function getFeaturedProducts() {
   return client.fetch(
-    groq`*[_type == "product" && featured == true]{
+    groq`*[_type == "product" && featured == true && archived != true]{
       _id,
       name,
       "slug": slug.current,
@@ -148,7 +148,7 @@ export async function getFeaturedProducts() {
 
 export async function getProducts() {
   return client.fetch(
-    groq`*[_type == "product"]{
+    groq`*[_type == "product" && archived != true]{
       _id,
       createdAt,
       name,
@@ -170,7 +170,7 @@ export async function getProducts() {
 
 export async function getProductsRetailed(limit = 4, excludeSlug = null) {
   const products = await client.fetch(
-    groq`*[_type == "product"]{
+    groq`*[_type == "product" && archived != true]{
       _id,
       name,
       price,
