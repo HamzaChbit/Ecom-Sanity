@@ -17,7 +17,7 @@ export async function getProductBySlug(slug) {
   return client.fetch(
     groq`*[_type == "product" && slug.current == $slug && archived != true]{
       _id,
-      createdAt,
+      _createdAt,
       name,
       slug,
       specs,
@@ -60,7 +60,7 @@ export async function getProductsByCategorySlug(slug) {
       name,
       price,
        discount,
-       createdAt,
+       _createdAt,   
       specs,
       "image": image.asset->url,
       "slug": slug.current,
@@ -159,7 +159,7 @@ export async function getProducts() {
   return client.fetch(
     groq`*[_type == "product" && archived != true]{
       _id,
-      createdAt,
+      _createdAt,
       name,
       slug,
       description,

@@ -157,19 +157,19 @@ const product = {
 
 
 
-    {
-      name: "createdAt",
-      title: "Created At",
-      type: "datetime",
-      options: {
-        dateFormat: "YYYY-MM-DDTHH:mm:ssZ",
-      },
-      readOnly: true,
-    },
+    // {
+    //   name: "createdAt",
+    //   title: "Created At",
+    //   type: "datetime",
+    //   options: {
+    //     dateFormat: "YYYY-MM-DDTHH:mm:ssZ",
+    //   },
+    //   readOnly: true,
+    // },
   ],
-  initialValue: {
-    createdAt: new Date().toISOString(),
-  },
+  // initialValue: {
+  //   createdAt: new Date().toISOString(),
+  // },
 };
 
 export default product;
