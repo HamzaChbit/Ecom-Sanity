@@ -2,7 +2,7 @@
 
 import ProductsView from "@/src/components/ProductsView";
 import { getProducts } from "@/src/sanity/product-util";
-
+export const revalidate = 10;
 export const metadata = {
   title: "All Products - DESKTOPPLUS",
   description: "Browse our collection of high-quality products. Find the best deals on the latest items.",
