@@ -55,7 +55,11 @@ function Cart() {
         toast.success("Order placed successfully");
 
         const messageItems = cart.map(p => {
-          const finalPrice = p.price; // Price in cart is already calculated
+          // CORRECT CALCULATION for the final price
+          const finalPrice = (p.discount && p.discount > 0)
+            ? p.price * (1 - p.discount / 100)
+            : p.price;
+          
           const colorInfo = p.color ? `\n   - Color: ${p.color}` : "";
           const urlInfo = p.url ? `\n   - URL: ${p.url}` : "";
           const imageInfo = p.image ? `\n   - Image: ${p.image}` : "";
@@ -86,7 +90,7 @@ ${messageItems}
 
   const truncateString = (str, num) => {
     if (str?.length > num) {
-      return str.slice(0, num) + '...'; // Truncate from beginning
+      return str.slice(0, num) + '...';
     } else {
       return str;
     }
@@ -114,9 +118,16 @@ ${messageItems}
                 <h1>{truncateString(product?.name, 35)}</h1> 
               </td>
               <td className="py-2 px-4">{product?.quantity}</td>
+              
+              {/* === FINAL CORRECTED LINE === */}
               <td className="py-2 px-4">
-  د.م. {Math.floor((product.discountPrice ? product.discountPrice : product.price) * product.quantity)}
-</td>
+                د.م. {Math.floor(
+                  (product.discount && product.discount > 0
+                    ? product.price * (1 - product.discount / 100)
+                    : product.price) * product.quantity
+                )}
+              </td>
+              {/* ============================= */}
 
               <td className="py-2 px-4">
                 <FaTrash onClick={() => handleRemoveFromCart(product?._id)} className="text-red-500 mx-auto cursor-pointer" />
