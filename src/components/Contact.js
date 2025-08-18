@@ -4,9 +4,9 @@ import React, { useState } from 'react';
 import emailjs from '@emailjs/browser';
 import toast from 'react-hot-toast';
 import { useForm } from 'react-hook-form';
-// Make sure you have react-icons installed: npm install react-icons
+
 import { FaInstagram, FaMapMarkerAlt, FaPhone } from 'react-icons/fa';
-import { MdOutlineEmail } from 'react-icons/md';
+
 
 function Contact() {
   const [isLoading, setIsLoading] = useState(false);

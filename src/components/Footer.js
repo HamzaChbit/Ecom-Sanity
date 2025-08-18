@@ -6,12 +6,10 @@ import Link from 'next/link';
 
 function Footer() {
   return (
-    <motion.footer 
+    <footer 
       // 1. تغيير الخلفية إلى الأسود وتغيير لون الخط الفاصل
       className='bg-gray-900 p-6 md:p-10 mt-16 border-t border-gray-700' 
-      initial={{ y: 20, opacity: 0 }} 
-      animate={{ y: 0, opacity: 1 }} 
-      transition={{ duration: 0.8, delay: 0.2 }}
+ 
     >
       <div className='max-w-6xl mx-auto'>
         
@@ -66,7 +64,7 @@ function Footer() {
         </div>
 
       </div>
-    </motion.footer>
+    </footer>
   );
 }
 
