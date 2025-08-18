@@ -86,7 +86,7 @@ export async function getProductsByBrandSlug(slug) {
       name,
       price,
       discount,
-      _createdAt, // Changed from createdAt to _createdAt for Sanity's timestamp
+      _createdAt, 
       specs,
       "image": image.asset->url,
       "slug": slug.current,
@@ -95,7 +95,7 @@ export async function getProductsByBrandSlug(slug) {
         title,
         "slug": slug.current
       },
-      // This line is the only change needed
+      
       "brand": brandCategory->{
         _id,
         title,

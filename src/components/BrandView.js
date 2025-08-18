@@ -2,7 +2,8 @@
 
 import React, { useState, useEffect } from "react";
 import { motion } from "framer-motion";
-import Card from "./Card";
+import Card from "@/src/components/Card";
+
 
 
 export default function BrandView({ initialProducts }) {

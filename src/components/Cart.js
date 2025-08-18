@@ -1,19 +1,13 @@
 'use client'
 import useCartStore from '@/cartStore';
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { FaTrash } from 'react-icons/fa';
-
 import Link from 'next/link';
 import axios from 'axios';
-
 import 'react-international-phone/style.css';
-
 import toast from 'react-hot-toast';
-
 import { useRouter } from 'next/navigation';
-import { PhoneInput } from 'react-international-phone';
 import Image from 'next/image';
-
 
 function Cart() {
   const cartTotal = useCartStore((state) => state.cartTotal);
@@ -21,65 +15,54 @@ function Cart() {
   const totalItems = useCartStore((state) => state.totalItems);
   const removeFromCart = useCartStore((state) => state.removeFromCart);
   const [loading, setLoading] = useState(false);
-  const router = useRouter()
- const [email, setEmail] = useState('');
+  const router = useRouter();
+  const [email, setEmail] = useState('');
   const [address, setAddress] = useState('');
-const [firstName, setFirstName] = useState('');
+  const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
   const [phone, setPhone] = useState('');
+
   const handleRemoveFromCart = (productId) => {
     removeFromCart(productId);
   };
- 
 
+  const onSubmit = async (e) => {
+    e.preventDefault();
 
-
-
-
-const onSubmit = async (e) => {
-  e.preventDefault();
-
-  if (!firstName || !lastName || !phone || !email || !address) {
+    if (!firstName || !lastName || !phone || !email || !address) {
       toast.error("Veuillez remplir tous les champs");
       return;
     }
 
-        if (!(phone.length === 9 || phone.length === 13 || phone.length === 12 || phone.length === 10 || phone.length === 11 || phone.length === 8 || phone.length === 14 || phone.length === 15))
+    if (!(phone.length >= 8 && phone.length <= 15)) {
       return toast.error('Please enter a valid telephone number');
+    }
 
+    try {
+      setLoading(true);
 
+      const response = await axios.post("/api/order", {
+        cart,
+        firstName,
+        lastName,
+        phone,
+        email,
+        address,
+      });
 
-  try {
-    setLoading(true);
+      if (response.status === 200) {
+        cart.forEach(product => removeFromCart(product._id));
+        toast.success("Order placed successfully");
 
-    // بعث البيانات مباشرة لل API order
-    const response = await axios.post("/api/order", {
-      
-    cart,
-    firstName,
-    lastName,
-    phone,
-    email,
-    address,
-    });
-
-    if (response.status === 200) {
-      cart.forEach(product => removeFromCart(product._id));
-      toast.success("Order placed successfully");
-
-
-
-const messageItems = cart.map(p => {
-          const finalPrice = p.discount ? p.price - (p.price * p.discount / 100) : p.price;
+        const messageItems = cart.map(p => {
+          const finalPrice = p.price; // Price in cart is already calculated
           const colorInfo = p.color ? `\n   - Color: ${p.color}` : "";
-           const urlInfo = p.url ? `\n   - URL: ${p.url}` : "";
-  const imageInfo = p.image ? `\n   - Image: ${p.image}` : "";
-        return `*${p.name}*\n   - Quantity: ${p.quantity}\n   - Price: $${(finalPrice * p.quantity).toFixed(2)}${colorInfo}${urlInfo}${imageInfo}`;
-}).join("\n\n");
+          const urlInfo = p.url ? `\n   - URL: ${p.url}` : "";
+          const imageInfo = p.image ? `\n   - Image: ${p.image}` : "";
+          return `*${p.name}*\n   - Quantity: ${p.quantity}\n   - Price: د.م. ${Math.floor(finalPrice * p.quantity)}${colorInfo}${urlInfo}${imageInfo}`;
+        }).join("\n\n");
 
-
-  
-const finalMessage = `🛒 Nouvelle commande: 
+        const finalMessage = `🛒 Nouvelle commande: 
 👤 Client: ${firstName} ${lastName}
 📞 Téléphone: ${phone}
 📧 Email: ${email}
@@ -88,51 +71,29 @@ const finalMessage = `🛒 Nouvelle commande:
 📦 Articles:
 ${messageItems}
 
-💰 Total: $${cartTotal.toFixed(2)}`;
+💰 Total: د.م. ${Math.floor(cartTotal)}`;
 
-       
-      //WhatsApp
-      // const whatsappURL = `https://wa.me/21269497110?text=${encodeURIComponent(finalMessage)}`;
-      // window.open(whatsappURL, "_blank");
+        const whatsappURL = `https://wa.me/212694977110?text=${encodeURIComponent(finalMessage)}`;
+        window.open(whatsappURL, "_blank");
 
-        // openWhatsApp(finalMessage);
-      const whatsappURL = `https://wa.me/212694977110?text=${encodeURIComponent(finalMessage)}`;
-window.open(whatsappURL, "_blank");
+      } else {
+        toast.error("Failed to place order");
+      }
+    } finally {
+      setLoading(false);
+    }
+  };
 
-
-
-
-
-
-
-
+  const truncateString = (str, num) => {
+    if (str?.length > num) {
+      return str.slice(0, num) + '...'; // Truncate from beginning
     } else {
-      toast.error("Failed to place order");
-    }
-  } finally {
-    setLoading(false);
-  }
-};
-
-
-
-  const truncateString = (str,num ) =>{
-    if(str?.length > num) {
-      return str.slice(8,num) 
-    }else{
-      return str
+      return str;
     }
   }
 
-
-
-  // useEffect(() => {
-  //   if (!cart || cart.length === 0) {
-  //     router.push("/products");
-  //   }
-  // }, [cart, router]);
   return (
-    <div className='max-w-3xl mx-auto  mt-20'>
+    <div className='max-w-3xl mx-auto mt-20 p-4'>
       <h1 className="text-3xl text-center font-semibold text-amber-500 mb-6"> {totalItems} <span className='text-black'>Items in Cart</span> </h1>
 
       <table className="w-full border-collapse">
@@ -144,131 +105,63 @@ window.open(whatsappURL, "_blank");
             <th className="py-2 px-4">Remove</th>
           </tr>
         </thead>
-  
+    
         <tbody>
-  {cart.map((product) => {
-    const finalPrice = product.discount 
-      ? product.price - (product.price * product.discount / 100)
-      : product.price;
-
-    return (
-      <tr key={product.id} className="hover:bg-gray-50 text-center border-b border-gray-300 text-black ">
-        <td className="py-2 px-4 flex items-center md:flex-row flex-col">
-          <Image className='mr-2' src={product?.image} width={50} height={30} alt="art" />
-          <h1>{truncateString(product?.name,35)}</h1> 
-        </td>
-        <td className="py-2 px-4">{product?.quantity}</td>
-        <td className="py-2 px-4">${(finalPrice * product?.quantity).toFixed(2)}</td>
-        <td className="py-2 px-4">
-          <FaTrash onClick={() => { handleRemoveFromCart(product?._id) }} className="text-red-500 mx-auto cursor-pointer" />
-        </td>
-      </tr>
-    )
-  })}
-</tbody>
-
+          {cart.map((product) => (
+            <tr key={product.id || product._id} className="hover:bg-gray-50 text-center border-b border-gray-300 text-black ">
+              <td className="py-2 px-4 flex items-center md:flex-row flex-col text-left">
+                <Image className='mr-2 rounded' src={product?.image} width={50} height={50} style={{objectFit: 'cover'}} alt={product?.name || 'product'} />
+                <h1>{truncateString(product?.name, 35)}</h1> 
+              </td>
+              <td className="py-2 px-4">{product?.quantity}</td>
+              <td className="py-2 px-4">د.م. {Math.floor(product.price * product?.quantity)}</td>
+              <td className="py-2 px-4">
+                <FaTrash onClick={() => handleRemoveFromCart(product?._id)} className="text-red-500 mx-auto cursor-pointer" />
+              </td>
+            </tr>
+          ))}
+        </tbody>
       </table>
 
       <div className="mt-4 text-black ml-auto">
-        <p className="text-lg font-semibold text-right mr-4">  <span className='text-amber-500'>Total:</span> ${cartTotal.toFixed(2)}</p>
+        <p className="text-lg font-semibold text-right mr-4"> <span className='text-amber-500'>Total:</span> د.م. {Math.floor(cartTotal)}</p>
       </div>
 
- 
-
-<div className="mt-4 text-black ">
-
-{cartTotal > 0 && (
-  <form onSubmit={onSubmit} className=''>
-    {/* Nom & Prénom */}
-    <div className='flex md:flex-row flex-col justify-around'>
-      <input
-        className="px-5 py-2 my-2 w-full bg-gray-100"
-        type="text"
-        value={firstName}
-        onChange={(e) => setFirstName(e.target.value)}
-        placeholder="Prénom"
-        required
-      />
-      <input
-        className="px-5 py-2 my-2 w-full bg-gray-100 mx-2"
-        type="text"
-        value={lastName}
-        onChange={(e) => setLastName(e.target.value)}
-        placeholder="Nom"
-        required
-      />
-    </div>
-
-    {/* Adresse */}
-    <div className='flex md:flex-row flex-col justify-around'>
-      <input
-        className='px-5 py-2 my-2 w-full mx-2 bg-gray-100'
-        type="text"
-        value={address}
-        onChange={(e) => setAddress(e.target.value)}
-        placeholder="Adresse et ville"
-        required
-      />
-    </div>
-
-    {/* Numéro téléphone */}
-    <div className='flex md:flex-row flex-col justify-around'>
-      <input
-        className='px-5 py-2 my-2 w-full mx-2 bg-gray-100'
-        type="numvber"
-        value={phone}
-        onChange={(e) => setPhone(e.target.value)}
-        placeholder="Numéro de téléphone"
-        required
-      />
-    </div>
-    
-
-
-    {/* Email */}
-    <div className='flex md:flex-row flex-col justify-around'>
-      <input
-        className="px-5 py-2 my-2 w-full bg-gray-100"
-        type="email"
-        value={email}
-        onChange={(e) => setEmail(e.target.value)}
-        placeholder="Email"
-        required
-      />
-    </div>
-
-    {/* Submit */}
-    <div className='max-w-sm mx-auto space-y-4'>
-      <button
-        type="submit"
-        disabled={loading}
-        className="text-lg w-full font-semibold text-center mr-4 bg-amber-500 hover:bg-amber-600 text-white py-2 px-4 rounded   border-amber-500"
-      >
-        {loading ? "Loading..." : "Commander"}
-      </button>
-    </div>
-  </form>
-)}
-
-
-
+      <div className="mt-4 text-black ">
+        {cartTotal > 0 && (
+          <form onSubmit={onSubmit} className=''>
+            {/* Form inputs remain the same */}
+            <div className='flex md:flex-row flex-col justify-around'>
+              <input className="px-5 py-2 my-2 w-full bg-gray-100 rounded" type="text" value={firstName} onChange={(e) => setFirstName(e.target.value)} placeholder="Prénom" required />
+              <input className="px-5 py-2 my-2 w-full bg-gray-100 mx-0 md:mx-2 rounded" type="text" value={lastName} onChange={(e) => setLastName(e.target.value)} placeholder="Nom" required />
+            </div>
+            <div className='flex'>
+              <input className='px-5 py-2 my-2 w-full bg-gray-100 rounded' type="text" value={address} onChange={(e) => setAddress(e.target.value)} placeholder="Adresse et ville" required />
+            </div>
+            <div className='flex'>
+              <input className='px-5 py-2 my-2 w-full bg-gray-100 rounded' type="tel" value={phone} onChange={(e) => setPhone(e.target.value)} placeholder="Numéro de téléphone" required />
+            </div>
+            <div className='flex'>
+              <input className="px-5 py-2 my-2 w-full bg-gray-100 rounded" type="email" value={email} onChange={(e) => setEmail(e.target.value)} placeholder="Email" required />
+            </div>
+            <div className='max-w-sm mx-auto space-y-4 mt-4'>
+              <button type="submit" disabled={loading} className="text-lg w-full font-semibold text-center bg-amber-500 hover:bg-amber-600 text-white py-2 px-4 rounded transition-colors">
+                {loading ? "Loading..." : "Commander"}
+              </button>
+            </div>
+          </form>
+        )}
 
         <div className='max-w-sm mx-auto space-y-4 my-2' >
-            <Link className='' href="/">
-                 <button className="text-lg w-full font-semibold text-center mr-4 bg-white hover:bg-amber-500 hover:text-white text-amber-500 border border-amber-500 py-2 px-4 rounded">
-        
-            Back to Shopping
-         
-          </button>  
-              </Link> 
+          <Link className='' href="/">
+            <button className="text-lg w-full font-semibold text-center bg-white hover:bg-amber-500 hover:text-white text-amber-500 border border-amber-500 py-2 px-4 rounded transition-colors">
+              Back to Shopping
+            </button>  
+          </Link> 
         </div>
-         
-   
-         
-     </div>
+      </div>
     </div>
   );
 }
 
 export default Cart;
-

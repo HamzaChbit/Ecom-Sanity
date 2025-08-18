@@ -52,7 +52,7 @@ function Details({ product }) {
             {/* Discount Badge */}
             {product?.discount && (
               <div className="absolute top-3 left-3 bg-red-500 text-white text-base font-semibold px-3 py-1 rounded-md z-10">
-                -{product.discount}%
+                -{Math.floor(product.discount)}%
               </div>
             )}
             
@@ -145,15 +145,15 @@ function Details({ product }) {
             {product?.discount ? (
               <div className="flex items-baseline gap-3">
                 <span className="text-amber-500 text-3xl font-bold">
-                  ${(product.price - (product.price * product.discount / 100))?.toFixed(2)}
+                  د.م. {Math.floor(product.price - (product.price * product.discount / 100))}
                 </span>
                 <span className="text-gray-400 line-through text-xl font-semibold">
-                  ${product.price?.toFixed(2)}
+                  د.م. {Math.floor(product.price)}
                 </span>
               </div>
             ) : (
               <span className="text-amber-500 text-3xl font-bold">
-                ${product.price?.toFixed(2)}
+                د.م. {Math.floor(product.price)}
               </span>
             )}
           </div>

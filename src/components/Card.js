@@ -6,10 +6,10 @@ function Card({ product }) {
     <Link href={`/details/${product?.slug}`}>
       <div className="relative shadow-md max-w-sm cursor-pointer rounded-2xl overflow-hidden group bg-white">
         
-        {/* 1. Discount Badge: Made the red darker for better contrast */}
+        {/* Discount Badge */}
         {product.discount && (
           <div className="absolute top-0 left-0 bg-red-600 text-white text-sm font-semibold px-3 py-1 z-10">
-            -{product.discount}%
+            -{Math.floor(product.discount)}%
           </div>
         )}
 
@@ -23,7 +23,6 @@ function Card({ product }) {
         </div>
 
         <div className="p-4 space-y-2">
-          {/* 2. Product Name: Kept as black for excellent contrast */}
           <h1 className="text-gray-800 group-hover:text-amber-600 text-2xl font-semibold truncate transition-colors">
             {product?.name}
           </h1>
@@ -32,20 +31,20 @@ function Card({ product }) {
           <br/>
         </div>
 
-        {/* 3. Price Section: Inverted the colors for high contrast */}
+        {/* Price Section: Currency updated to د.م. */}
         <div className="absolute bottom-0 right-0 flex items-baseline gap-x-2 rounded-tl-xl bg-amber-500 px-4 py-2 shadow-lg">
           {product.discount ? (
             <>
               <span className="text-base font-medium text-black/60 line-through">
-                ${product.price.toFixed(2)}
+                د.م. {Math.floor(product.price)}
               </span>
               <span className="text-xl font-bold text-black">
-                ${(product.price - (product.price * product.discount / 100)).toFixed(2)}
+                د.م. {Math.floor(product.price - (product.price * product.discount / 100))}
               </span>
             </>
           ) : (
             <span className="text-xl font-bold text-black">
-              ${product.price.toFixed(2)}
+              د.م. {Math.floor(product.price)}
             </span>
           )}
         </div>
