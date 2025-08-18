@@ -67,6 +67,7 @@ function Header() {
               className="size-5"
               animate={{ rotate: openMenu === cat.slug ? 180 : 0 }}
               transition={{ duration: 0.3 }}
+              aria-hidden="true" // Hide decorative icon from screen readers
             >
               <path fillRule="evenodd" d="M5.22 8.22a.75.75 0 0 1 1.06 0L10 11.94l3.72-3.72a.75.75 0 1 1 1.06 1.06l-4.25 4.25a.75.75 0 0 1-1.06 0L5.22 9.28a.75.75 0 0 1 0-1.06Z" clipRule="evenodd" />
             </motion.svg>
@@ -116,16 +117,12 @@ function Header() {
       <div className="p-4 border-b border-gray-200">
         <div className="max-w-7xl mx-auto flex justify-between items-center">
           <Link href="/" onClick={closeAllMenus} className="flex items-center flex-shrink-0">
-            {/* <h1 className="ml-2 text-xl lg:text-3xl text-gray-800">DESKTOP<span className="text-amber-500">PLUS</span></h1> */}
-
-       <Image
-          src="/logo-v1.png" // Path to your logo in the public folder
-          alt="DESKTOPPLUS Logo"
-          width={80}   // Set a suitable width
-          height={80}  // Set a suitable height
-        />
-
-
+            <Image
+              src="/logo-v1.png"
+              alt="DESKTOPPLUS Homepage" // Added more descriptive alt text
+              width={80}
+              height={80}
+            />
           </Link>
 
           <div className="flex-grow flex justify-center">
@@ -140,8 +137,14 @@ function Header() {
           </div>
 
           <div className="flex items-center gap-4">
-            <Link href="/cart" onClick={closeAllMenus} className="relative">
-              <FaShoppingCart className="text-3xl text-amber-500 cursor-pointer transition-transform duration-300 hover:scale-110" />
+            {/* ## FIX 1: Added aria-label to the cart link ## */}
+            <Link 
+              href="/cart" 
+              onClick={closeAllMenus} 
+              className="relative" 
+              aria-label={`View shopping cart, ${totalItems} items`}
+            >
+              <FaShoppingCart className="text-3xl text-amber-500 cursor-pointer transition-transform duration-300 hover:scale-110" aria-hidden="true" />
               {totalItems > 0 && (
                 <motion.span
                   initial={{ scale: 0 }}
@@ -154,11 +157,16 @@ function Header() {
             </Link>
             
             <div className="md:hidden">
-              <button onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}>
+              {/* ## FIX 2: Added aria-label to the mobile menu button ## */}
+              <button 
+                onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)} 
+                aria-label={isMobileMenuOpen ? "Close menu" : "Open menu"}
+                aria-expanded={isMobileMenuOpen}
+              >
                 {isMobileMenuOpen ? (
-                  <FaTimes className="text-2xl text-gray-700" />
+                  <FaTimes className="text-2xl text-gray-700" aria-hidden="true" />
                 ) : (
-                  <FaBars className="text-2xl text-gray-700" />
+                  <FaBars className="text-2xl text-gray-700" aria-hidden="true" />
                 )}
               </button>
             </div>
