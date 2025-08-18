@@ -75,7 +75,7 @@ function Comments({ product }) {
           placeholder="Your email..."
           value={email}
           onChange={handleEmailChange}
-          className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:border-[#5B20B6]"
+          className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:border-amber-600"
         />
       </div>
 
@@ -86,11 +86,11 @@ function Comments({ product }) {
           placeholder="Your comment..."
           value={comment}
           onChange={handleCommentChange}
-          className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:border-[#5B20B6]"
+          className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:border-amber-600"
         />
         <button
           onClick={handleAddComment}
-          className="bg-[#5B20B6] text-white px-4 py-2 rounded-md hover:bg-[#4C1D95] focus:outline-none"
+          className="bg-amber-500 text-white px-4 py-2 rounded-md hover:bg-amber-600 focus:outline-none"
         >
           Comment
         </button>
@@ -103,7 +103,7 @@ function Comments({ product }) {
             <strong>{c.email}:</strong> {c.commentText} 
             <div className='flex flex-row space-x-1'>
               {[...Array(c.stars)].map((_, i) => (
-                <FaStar key={i} className="text-[#FFD700] text-lg" />
+                <FaStar key={i} className="text-amber-500 text-lg" />
               ))}
             </div>
           </div>
