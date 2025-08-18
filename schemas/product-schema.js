@@ -113,8 +113,8 @@ const product = {
     {
       type: 'object',
       fields: [
-        { name: 'name', title: 'Spec Name', type: 'string' },
-        { name: 'value', title: 'Spec Value', type: 'string' }
+        { name: 'name', title: 'Spec Name (CPU,RAM....', type: 'string' },
+        { name: 'value', title: 'Spec Value (i5-1135G7 CPU 2.40GHz ,8GB RAM...', type: 'string' }
       ]
     }
   ]
