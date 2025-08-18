@@ -7,18 +7,23 @@ import Footer from "@/src/components/Footer";
 
 const inter = Inter({ subsets: ["latin"] });
 
+// البيانات الوصفية المحدثة باللغة الفرنسية
 export const metadata = {
-  // Using a title object for more powerful SEO
   title: {
-    default: "DESKTOPPLUS | Laptops & Tech in Agadir, Morocco", // Title for the homepage
-    template: "%s | DESKTOPPLUS", // Template for all other pages
+    default: "DESKTOPPLUS | PC Portables & Tech à Agadir, Maroc", // عنوان الصفحة الرئيسية
+    template: "%s | DESKTOPPLUS", // قالب للصفحات الأخرى
   },
-  description: "Explore the latest in technology and elevate your lifestyle with cutting-edge gadgets from DESKTOPPLUS. High-quality laptops and IT equipment delivered across Morocco.",
+  description: "Découvrez les dernières nouveautés technologiques de DESKTOPPLUS. PC portables et matériel informatique de haute qualité livrés partout au Maroc.",
 };
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="en">
+   
+    <html lang="fr">
+      <head>
+       
+        <meta charSet="utf-8" />
+      </head>
       <body className={inter.className}>
         <ToastProvider />
         
