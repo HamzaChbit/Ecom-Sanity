@@ -1,6 +1,6 @@
 import BrandView from "@/src/components/BrandView";
 import { getProductsByBrandSlug } from "@/src/sanity/product-util"; // We'll create this in the next step
-
+export const revalidate = 10;
 // This function runs on the server to generate dynamic metadata
 export async function generateMetadata({ params }) {
   const { slug } = params;
