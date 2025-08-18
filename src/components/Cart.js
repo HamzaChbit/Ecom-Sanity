@@ -114,7 +114,10 @@ ${messageItems}
                 <h1>{truncateString(product?.name, 35)}</h1> 
               </td>
               <td className="py-2 px-4">{product?.quantity}</td>
-              <td className="py-2 px-4">د.م. {Math.floor(product.price * product?.quantity)}</td>
+              <td className="py-2 px-4">
+  د.م. {Math.floor((product.discountPrice ? product.discountPrice : product.price) * product.quantity)}
+</td>
+
               <td className="py-2 px-4">
                 <FaTrash onClick={() => handleRemoveFromCart(product?._id)} className="text-red-500 mx-auto cursor-pointer" />
               </td>
