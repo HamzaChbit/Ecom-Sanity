@@ -67,9 +67,7 @@ export default function BrandView({ initialProducts }) {
 
   return (
     <div className="max-w-7xl mx-auto p-4">
-       {/* <h1 className="text-3xl font-bold mb-6 capitalize text-center md:text-left">
-        {brandName}
-      </h1> */}
+     
       <div className="flex flex-col md:flex-row gap-8">
         <motion.div
           initial={{ y: 10, opacity: 0 }}
