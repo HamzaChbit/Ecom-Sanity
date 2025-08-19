@@ -5,9 +5,9 @@ import schemas from './schemas';
 
 
 const config = defineConfig({
-  projectId: "yqp2zzaf",
+  projectId: "ut12lb4s",
   dataset: "production",
-  title: "Sanity-Ecom-vite",
+  title: "Sanity-ecom",
   apiVersion: "2023-11-21",
   basePath: "/admin",
   plugins: [deskTool()],

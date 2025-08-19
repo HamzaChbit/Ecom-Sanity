@@ -1,10 +1,13 @@
-'use client';
+"use client";
 
 import React, { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import Card from "@/src/components/Card";
 
+
+
 export default function BrandView({ initialProducts }) {
+  const [data, setData] = useState(initialProducts);
   const [minPrice, setMinPrice] = useState("");
   const [sortBy, setSortBy] = useState("latest");
   const [currentPage, setCurrentPage] = useState(1);
@@ -12,15 +15,12 @@ export default function BrandView({ initialProducts }) {
   const [searchQuery, setSearchQuery] = useState("");
   const [brandName, setBrandName] = useState("");
 
-  // Brand colors for consistency
-  const brandTeal = "#2DD4BF";
-  const brandDarkGray = "#4a4a4a";
-
   useEffect(() => {
+    setData(initialProducts);
+    // Set the brand name from the first product if available
     if (initialProducts.length > 0) {
       setBrandName(initialProducts[0].brand.title);
     }
-    setCurrentPage(1);
   }, [initialProducts]);
 
   const applyFilters = () => {
@@ -33,13 +33,19 @@ export default function BrandView({ initialProducts }) {
       return isMinPriceValid && matchesSearchQuery;
     });
 
-    return [...filteredProducts].sort((a, b) => {
-      if (sortBy === "latest") return new Date(b._createdAt) - new Date(a._createdAt);
-      if (sortBy === "oldest") return new Date(a._createdAt) - new Date(b._createdAt);
-      if (sortBy === "highest") return parseFloat(b.price) - parseFloat(a.price);
-      if (sortBy === "lowest") return parseFloat(a.price) - parseFloat(b.price);
+    const sortedProducts = [...filteredProducts].sort((a, b) => {
+      if (sortBy === "latest") {
+        return new Date(b._createdAt) - new Date(a._createdAt);
+      } else if (sortBy === "oldest") {
+        return new Date(a._createdAt) - new Date(b._createdAt);
+      } else if (sortBy === "highest") {
+        return parseFloat(b.price) - parseFloat(a.price);
+      } else if (sortBy === "lowest") {
+        return parseFloat(a.price) - parseFloat(b.price);
+      }
       return 0;
     });
+    return sortedProducts;
   };
   
   const resetFilters = () => {
@@ -52,100 +58,83 @@ export default function BrandView({ initialProducts }) {
   const filteredData = applyFilters();
   const indexOfLastProduct = currentPage * productsPerPage;
   const indexOfFirstProduct = indexOfLastProduct - productsPerPage;
-  const currentProducts = filteredData.slice(indexOfFirstProduct, indexOfLastProduct);
+  const currentProducts = filteredData.slice(
+    indexOfFirstProduct,
+    indexOfLastProduct
+  );
+  
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
   return (
-    <div className="mx-auto max-w-7xl p-4">
-      
-      {/* 1. Added a dynamic title for the page */}
-      {/* {brandName && (
-        <div className="mb-8 text-center">
-          <h1 className="text-4xl font-bold" style={{ color: brandTeal }}>
-            Products by {brandName}
-          </h1>
-        </div>
-      )} */}
-
-      <div className="flex flex-col gap-8 md:flex-row">
+    <div className="max-w-7xl mx-auto p-4">
+     
+      <div className="flex flex-col md:flex-row gap-8">
         <motion.div
           initial={{ y: 10, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
           transition={{ duration: 0.3, delay: 0.4 }}
           className="w-full md:w-1/4"
         >
-          <div className="sticky top-20 space-y-4 rounded-lg border bg-white p-4 shadow-sm">
-            {/* 2. Updated filter title color */}
-            <h2 className="border-b pb-2 text-2xl font-semibold" style={{ color: brandTeal }}>
+          <div className="p-4 border rounded-lg shadow-sm bg-white space-y-4">
+            <h2 className="text-2xl font-semibold text-amber-500 border-b pb-2">
               Filters
             </h2>
-            
-            {/* Search Input */}
+            {/* ... (All your filter inputs, now styled correctly) ... */}
             <div>
-              <label htmlFor="search" className="text-lg font-medium" style={{ color: brandDarkGray }}>Search</label>
-              <input
-                id="search" type="text" placeholder="Search..." value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-                // 3. Updated all input focus styles
-                className="mt-1 w-full rounded-md border border-gray-300 px-3 py-2 focus:border-[#2DD4BF] focus:outline-none focus:ring-1 focus:ring-[#2DD4BF]"
-              />
-            </div>
-
-            {/* Min Price Input */}
-            <div>
-              <label htmlFor="minPrice" className="text-lg font-medium" style={{ color: brandDarkGray }}>Min Price</label>
-              <input
-                id="minPrice" type="number" placeholder="e.g., 100" value={minPrice}
-                onChange={(e) => setMinPrice(e.target.value)}
-                className="mt-1 w-full rounded-md border border-gray-300 px-3 py-2 focus:border-[#2DD4BF] focus:outline-none focus:ring-1 focus:ring-[#2DD4BF]"
-              />
-            </div>
-
-            {/* Sort By Dropdown */}
-            <div>
-              <label htmlFor="sort" className="text-lg font-medium" style={{ color: brandDarkGray }}>Sort By</label>
-              <select
-                id="sort" value={sortBy} onChange={(e) => setSortBy(e.target.value)}
-                className="mt-1 w-full rounded-md border border-gray-300 px-3 py-2 focus:border-[#2DD4BF] focus:outline-none focus:ring-1 focus:ring-[#2DD4BF]"
+                <label htmlFor="search" className="text-lg font-medium text-gray-700">Search</label>
+                <input
+                  id="search" type="text" placeholder="Search..." value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                  className="mt-1 w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-1 focus:ring-amber-500 focus:border-amber-500"
+                />
+              </div>
+              <div>
+                <label htmlFor="minPrice" className="text-lg font-medium text-gray-700">Min Price</label>
+                <input
+                  id="minPrice" type="number" placeholder="e.g., 100" value={minPrice}
+                  onChange={(e) => setMinPrice(e.target.value)}
+                  className="mt-1 w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-1 focus:ring-amber-500 focus:border-amber-500"
+                />
+              </div>
+              <div>
+                <label htmlFor="sort" className="text-lg font-medium text-gray-700">Sort By</label>
+                <select
+                  id="sort" value={sortBy} onChange={(e) => setSortBy(e.target.value)}
+                  className="mt-1 w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-1 focus:ring-amber-500 focus:border-amber-500"
+                >
+                  <option value="latest">Latest</option>
+                  <option value="oldest">Oldest</option>
+                  <option value="highest">Most Expensive</option>
+                  <option value="lowest">Lowest Price</option>
+                </select>
+              </div>
+              <div>
+                <label htmlFor="perPage" className="text-lg font-medium text-gray-700">Per Page</label>
+                <select
+                  id="perPage" value={productsPerPage}
+                  onChange={(e) => {
+                    setProductsPerPage(Number(e.target.value));
+                    setCurrentPage(1);
+                  }}
+                  className="mt-1 w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-1 focus:ring-amber-500 focus:border-amber-500"
+                >
+                  {[6, 12, 18, 24].map((num) => (<option key={num} value={num}>{num}</option>))}
+                </select>
+              </div>
+              <button
+                onClick={resetFilters}
+                className="w-full bg-amber-500 hover:bg-amber-600 text-black font-bold px-4 py-2 rounded-md transition-colors"
               >
-                <option value="latest">Latest</option>
-                <option value="oldest">Oldest</option>
-                <option value="highest">Most Expensive</option>
-                <option value="lowest">Lowest Price</option>
-              </select>
-            </div>
-
-            {/* Products Per Page Dropdown */}
-            <div>
-              <label htmlFor="perPage" className="text-lg font-medium" style={{ color: brandDarkGray }}>Per Page</label>
-              <select
-                id="perPage" value={productsPerPage}
-                onChange={(e) => {
-                  setProductsPerPage(Number(e.target.value));
-                  setCurrentPage(1);
-                }}
-                className="mt-1 w-full rounded-md border border-gray-300 px-3 py-2 focus:border-[#2DD4BF] focus:outline-none focus:ring-1 focus:ring-[#2DD4BF]"
-              >
-                {[6, 12, 18, 24].map((num) => (<option key={num} value={num}>{num}</option>))}
-              </select>
-            </div>
-            
-            {/* 4. Updated Reset Button colors */}
-            <button
-              onClick={resetFilters}
-              className="w-full rounded-md px-4 py-2 font-bold text-white transition-colors hover:bg-teal-500"
-              style={{ backgroundColor: brandTeal }}
-            >
-              Reset Filters
-            </button>
+                Reset Filters
+              </button>
           </div>
         </motion.div>
 
         <div className="flex-1">
           {currentProducts.length === 0 ? (
-            <p className="text-center text-lg text-gray-500">No products found for this brand.</p>
+            <p className="text-center text-gray-500 text-lg">No products found for this brand.</p>
           ) : (
-            <div className="grid grid-cols-1 gap-8 md:grid-cols-2 xl:grid-cols-3">
+            <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-8">
               {currentProducts.map((product) => (
                 <Card key={product._id} product={product} />
               ))}
@@ -157,13 +146,11 @@ export default function BrandView({ initialProducts }) {
                 <button
                   key={index}
                   onClick={() => paginate(index + 1)}
-                  // 5. Updated active pagination button colors
-                  className={`rounded-md px-4 py-2 font-semibold transition-colors ${
+                  className={`px-4 py-2 rounded-md font-semibold transition-colors ${
                     currentPage === index + 1
-                      ? "text-white"
-                      : "bg-gray-200 text-gray-700 hover:bg-gray-300"
+                      ? "bg-amber-500 text-black"
+                      : "bg-gray-200 hover:bg-gray-300 text-gray-700"
                   }`}
-                  style={currentPage === index + 1 ? { backgroundColor: brandTeal } : {}}
                 >
                   {index + 1}
                 </button>

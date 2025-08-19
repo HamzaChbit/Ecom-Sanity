@@ -10,10 +10,10 @@ const inter = Inter({ subsets: ["latin"] });
 // البيانات الوصفية المحدثة باللغة الفرنسية
 export const metadata = {
   title: {
-    default: "VITE TECNOLOGIE | PC Portables & Tech à Agadir, Maroc", // عنوان الصفحة الرئيسية
-    template: "%s | VITE TECNOLOGIE", // قالب للصفحات الأخرى
+    default: "DESKTOPPLUS | PC Portables & Tech à Agadir, Maroc", // عنوان الصفحة الرئيسية
+    template: "%s | DESKTOPPLUS", // قالب للصفحات الأخرى
   },
-  description: "Découvrez les dernières nouveautés technologiques de VITE TECNOLOGIE. PC portables et matériel informatique de haute qualité livrés partout au Maroc.",
+  description: "Découvrez les dernières nouveautés technologiques de DESKTOPPLUS. PC portables et matériel informatique de haute qualité livrés partout au Maroc.",
 };
 
 export default function RootLayout({ children }) {

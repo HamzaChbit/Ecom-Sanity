@@ -2,47 +2,50 @@ import Image from "next/image";
 import Link from "next/link";
 
 function Card({ product }) {
-  const brandTeal = "#2DD4BF";
-  const brandDarkGray = "#4a4a4a";
-
   return (
     <Link href={`/details/${product?.slug}`}>
-      <div className="group relative max-w-sm cursor-pointer overflow-hidden rounded-2xl bg-white shadow-md">
+      <div className="relative shadow-md max-w-sm cursor-pointer rounded-2xl overflow-hidden group bg-white">
         
-        {/* Discount Badge (Kept red for visibility) */}
+        {/* Discount Badge */}
         {product.discount && (
-          <div className="absolute left-0 top-0 z-10 bg-red-600 px-3 py-1 text-sm font-semibold text-white">
+          <div className="absolute top-0 left-0 bg-red-600 text-white text-sm font-semibold px-3 py-1 z-10">
             -{Math.floor(product.discount)}%
           </div>
         )}
 
-        <div className="relative flex h-72 items-center justify-center overflow-hidden">
+        {/* <div className="relative h-72 overflow-hidden flex items-center justify-center aspect-ratio-1"> */}
+       {/* <div className="relative aspect-[4/3] overflow-hidden">
+          <Image
+            src={product?.image}
+            fill
+            alt={product?.name || "Product Image"}
+            className="group-hover:scale-105 transition-transform duration-300"
+          />
+        </div> */}
+                <div className="relative h-72 overflow-hidden flex items-center justify-center aspect-ratio-1">
           <Image
             src={product?.image}
             width={200} height={200}
             alt={product?.name || "Product Image"}
-            className="transition-transform duration-300 group-hover:scale-105"
+            className="group-hover:scale-105 transition-transform duration-300"
           />
         </div>
 
-        <div className="space-y-2 p-4">
-          {/* 1. Updated title color to brand's dark gray and hover to teal */}
-          <h1 
-            className="truncate text-xl font-semibold transition-colors md:text-2xl group-hover:text-[--hover-color]"
-            style={{ color: brandDarkGray, '--hover-color': brandTeal }}
-          >
+
+
+
+
+        <div className="p-4 space-y-2">
+          <h1 className="text-gray-800 group-hover:text-amber-600 md:text-2xl text-xl font-semibold truncate transition-colors">
             {product?.name}
           </h1>
-          <p className="truncate text-lg text-gray-500 md:text-xl">{product.description}</p>
+          <p className="md:text-xl text-lg text-gray-500 truncate">{product.description}</p>
           <br/>
           <br/>
         </div>
 
-        {/* 2. Changed price background to brand's teal */}
-        <div 
-          className="absolute bottom-0 right-0 flex items-baseline gap-x-2 rounded-tl-xl px-4 py-2 shadow-lg"
-          style={{ backgroundColor: brandTeal }}
-        >
+        {/* Price Section: Currency updated to د.م. */}
+        <div className="absolute bottom-0 right-0 flex items-baseline gap-x-2 rounded-tl-xl bg-amber-500 px-4 py-2 shadow-lg">
           {product.discount ? (
             <>
               <span className="text-base font-medium text-black/60 line-through">
