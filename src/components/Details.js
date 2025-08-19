@@ -25,6 +25,10 @@ function Details({ product }) {
       toast.error('Please select a color');
       return;
     }
+        if (qty < 1) {
+      toast.error('Quantity must be at least 1');
+      return;
+    }
     
     // Calculate the final price after discount
     const finalPrice = product.discount
