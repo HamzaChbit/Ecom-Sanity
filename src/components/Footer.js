@@ -1,7 +1,7 @@
 "use client";
 import React from 'react';
 import { motion } from 'framer-motion';
-import { FaMapMarkerAlt, FaPhone, FaInstagram } from 'react-icons/fa';
+import { FaMapMarkerAlt, FaPhone, FaInstagram, FaWhatsapp } from 'react-icons/fa';
 import Link from 'next/link';
 
 function Footer() {
@@ -32,10 +32,10 @@ function Footer() {
 
               {/* Phone */}
               <div className='flex items-center gap-x-3'>
-                <FaPhone size={30} className='text-amber-400' />
+                <FaWhatsapp size={30} className='text-amber-400' />
                 <div className='text-left'>
                   <h3 className='text-lg font-semibold text-white'>Phone</h3>
-                  <p className='text-gray-300'>+212 0694977110</p>
+                  <p className='text-gray-300'>+212 0648730359</p>
                 </div>
               </div>
 

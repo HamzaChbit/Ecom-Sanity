@@ -13,20 +13,21 @@ function Card({ product }) {
           </div>
         )}
 
-        <div className="relative h-72 overflow-hidden flex items-center justify-center aspect-ratio-1">
+        {/* <div className="relative h-72 overflow-hidden flex items-center justify-center aspect-ratio-1"> */}
+       <div className="relative aspect-[4/3] overflow-hidden">
           <Image
             src={product?.image}
-            width={150} height={150}
+            fill
             alt={product?.name || "Product Image"}
             className="group-hover:scale-105 transition-transform duration-300"
           />
         </div>
 
         <div className="p-4 space-y-2">
-          <h1 className="text-gray-800 group-hover:text-amber-600 text-2xl font-semibold truncate transition-colors">
+          <h1 className="text-gray-800 group-hover:text-amber-600 md:text-2xl text-xl font-semibold truncate transition-colors">
             {product?.name}
           </h1>
-          <p className="text-xl text-gray-500 truncate">{product.description}</p>
+          <p className="md:text-xl text-lg text-gray-500 truncate">{product.description}</p>
           <br/>
           <br/>
         </div>

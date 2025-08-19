@@ -5,7 +5,7 @@ import emailjs from '@emailjs/browser';
 import toast from 'react-hot-toast';
 import { useForm } from 'react-hook-form';
 
-import { FaInstagram, FaMapMarkerAlt, FaPhone } from 'react-icons/fa';
+import { FaInstagram, FaMapMarkerAlt, FaPhone, FaWhatsapp } from 'react-icons/fa';
 
 
 function Contact() {
@@ -86,10 +86,10 @@ function Contact() {
                       </div>
 
               <div className='flex items-center gap-x-5'>
-                <FaPhone size={25} className='text-amber-500' />
+                <FaWhatsapp size={25} className='text-amber-500' />
                 <div>
                   <h2 className='text-xl font-bold'>Phone</h2>
-                  <p className='text-gray-700'>+212 0694977110</p>
+                  <p className='text-gray-700'>+212 0648730359</p>
                 </div>
               </div>
             </div>

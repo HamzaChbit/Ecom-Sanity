@@ -1,5 +1,6 @@
 import Card from "./Card";
 
+export const revalidate = 10;
 export default  function FeaturedRoom({ featuredRoom }) {
   return (
     <div className="flex p-10">
