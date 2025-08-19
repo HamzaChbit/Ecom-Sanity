@@ -27,8 +27,8 @@ const features = [
 function FeaturesBar() {
   return (
     // Main container with vertical padding
-    <div className="w-full  py-16">
-      <div className="mx-auto grid  max-w-7xl grid-cols-1 gap-8 px-6 sm:grid-cols-2 lg:grid-cols-4">
+    <div className="w-full  py-16 flex flex-col items-center ">
+      <div className="mx-auto grid  max-w-7xl grid-cols-1 gap-8  sm:grid-cols-2 lg:grid-cols-4">
         {features.map((feature, index) => (
           // Each feature is now a card with padding and a border
           <div key={index} className="flex items-center  gap-4 rounded-lg  p-6 shadow-sm">
