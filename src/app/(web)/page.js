@@ -1,26 +1,27 @@
 import Banner from "@/src/components/Banner";
+import FeaturesBar from "@/src/components/FeaturesBar";
+import RightSide from "@/src/components/RightSide";
 import { getFeaturedProducts } from "@/src/sanity/product-util";
 import dynamic from 'next/dynamic';
 
+// 1. Updated metadata with your brand name
 export const metadata = {
-  title: "DESKTOPPLUS | High-Quality Laptops & Tech in Agadir, Morocco",
+  title: "Viet technologie | High-Quality Laptops & Tech in Agadir, Morocco",
   description: "Your one-stop shop for the latest laptops, computer components, and tech gadgets in Morocco. Quality products, 2-month warranty, and delivery across the country.",
   openGraph: {
-    title: "DESKTOPPLUS | Laptops & Tech",
+    title: "Viet technologie | Laptops & Tech",
     description: "Discover the best deals on high-quality tech in Morocco.",
     images: [
       {
         url: '/og-image.jpg',
         width: 1200,
         height: 630,
-        alt: 'DESKTOPPLUS Store Promotion',
+        alt: 'Viet technologie Store Promotion',
       },
     ],
   },
 };
 
-// ✅ FIX: Removed `{ ssr: false }` to enable Server-Side Rendering.
-// This is now the default, so you can simplify the import.
 const FeaturedRoom = dynamic(
   () => import('@/src/components/FeaturedRoom')
 );
@@ -34,13 +35,20 @@ export default async function Home() {
     <div>
       <Banner />
 
-      <div className="max-w-7xl mx-auto flex flex-col items-center justify-center mt-10 space-y-4 px-4">
-        <h1 className="text-4xl font-bold text-amber-500 text-center">
+      <div className="mx-auto mt-10 flex max-w-7xl flex-col items-center justify-center space-y-4 px-4">
+        {/* 2. Updated title color to use your brand's teal */}
+        <h1 className="text-center text-4xl font-bold text-brand-teal">
           Produits populaires
         </h1>
       </div>
 
       <FeaturedRoom featuredRoom={featuredRoom} />
+      <FeaturesBar />
+
+      {/* This component is positioned on the side */}
+      <div className='fixed bottom-0 right-0 h-full w-28'>
+        <RightSide/>
+      </div>
     </div>
   );
 }
