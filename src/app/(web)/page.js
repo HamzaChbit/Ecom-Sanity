@@ -2,7 +2,6 @@ import Banner from "@/src/components/Banner";
 import { getFeaturedProducts } from "@/src/sanity/product-util";
 import dynamic from 'next/dynamic';
 
-// 1. Added specific metadata for the homepage
 export const metadata = {
   title: "DESKTOPPLUS | High-Quality Laptops & Tech in Agadir, Morocco",
   description: "Your one-stop shop for the latest laptops, computer components, and tech gadgets in Morocco. Quality products, 2-month warranty, and delivery across the country.",
@@ -11,7 +10,7 @@ export const metadata = {
     description: "Discover the best deals on high-quality tech in Morocco.",
     images: [
       {
-        url: '/og-image.jpg', // Create this image in your /public folder (1200x630px recommended)
+        url: '/og-image.jpg',
         width: 1200,
         height: 630,
         alt: 'DESKTOPPLUS Store Promotion',
@@ -20,9 +19,10 @@ export const metadata = {
   },
 };
 
+// ✅ FIX: Removed `{ ssr: false }` to enable Server-Side Rendering.
+// This is now the default, so you can simplify the import.
 const FeaturedRoom = dynamic(
-  () => import('@/src/components/FeaturedRoom'),
-  { ssr: false }
+  () => import('@/src/components/FeaturedRoom')
 );
 
 export const revalidate = 10;

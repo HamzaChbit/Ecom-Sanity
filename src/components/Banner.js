@@ -6,9 +6,8 @@ import Image from 'next/image';
 function Banner() {
   return (
     <div className="relative w-full bg-gray-900 shadow-xl overflow-hidden">
-      {/* ✅ FIX: Removed `min-h-[50vh]` and `md:min-h-0`.
-        This allows the container's height to be determined by its content, 
-        preventing a conflict between a fixed height and the image's aspect ratio.
+      {/* ✅ FIX 1: Removed `min-h-[50vh]` and `md:min-h-0`.
+        This stops forcing a container height that conflicts with the image's natural dimensions.
       */}
       <div className="grid md:flex md:flex-row justify-between items-center max-w-7xl mx-auto p-8 md:p-12">
 
@@ -47,7 +46,7 @@ function Banner() {
               width={500}
               height={500}
               alt="Laptop"
-        
+              // ✅ FIX 2: Changed `h-full` to `h-auto`. This allows the image's height to scale correctly.
               className="w-full h-auto object-cover max-w-md"
               priority
             />
