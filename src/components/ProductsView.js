@@ -6,8 +6,7 @@ import Card from '@/src/components/Card';
 
 
 export default function ProductsView({ initialProducts }) {
-  // This state is used to hold the list of products for display.
-  // We don't use it anymore for filtering to avoid bugs.
+
   const [data, setData] = useState(initialProducts);
   
   // State for all filter controls
@@ -17,7 +16,7 @@ export default function ProductsView({ initialProducts }) {
   const [productsPerPage, setProductsPerPage] = useState(6);
   const [searchQuery, setSearchQuery] = useState('');
 
-  // This effect updates the component's data if the initial props change
+  
   // (e.g., when navigating between different category pages that reuse this component)
   useEffect(() => {
     setData(initialProducts);
