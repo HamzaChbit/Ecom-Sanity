@@ -11,8 +11,8 @@ export async function generateMetadata({ params }) {
     .replace(/\b\w/g, char => char.toUpperCase());
 
   return {
-    title: `${brandTitle} | DESKTOPPLUS`,
-    description: `Shop the best ${brandTitle} products at DESKTOPPLUS.`,
+    title: `${brandTitle} | Viet technologie`,
+    description: `Shop the best ${brandTitle} products at Viet technologie.`,
   };
 }
 

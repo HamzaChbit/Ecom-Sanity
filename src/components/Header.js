@@ -15,6 +15,10 @@ function Header() {
   const [subcategories, setSubcategories] = useState({});
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
+  // Colors mn l'logo:
+  const brandTeal = "#2DD4BF";
+  const brandDarkGray = "#4a4a4a";
+
   useEffect(() => {
     const fetchData = async () => {
       const categories = await getParentCategories();
@@ -57,7 +61,11 @@ function Header() {
           <button
             type="button"
             onClick={() => handleToggle(cat.slug)}
-            className="flex w-full items-center justify-between gap-1.5 rounded-md px-3 py-2 text-base font-medium text-gray-600 transition-colors hover:bg-gray-100 hover:text-amber-500"
+            // Tbadlo l'colors dyal text w hover
+            className="flex w-full items-center justify-between gap-1.5 rounded-md px-3 py-2 text-base font-medium transition-colors"
+            style={{ color: brandDarkGray, '--hover-color': brandTeal }}
+            onMouseOver={e => e.currentTarget.style.color = 'var(--hover-color)'}
+            onMouseOut={e => e.currentTarget.style.color = brandDarkGray}
           >
             {cat.title}
             <motion.svg
@@ -67,7 +75,7 @@ function Header() {
               className="size-5"
               animate={{ rotate: openMenu === cat.slug ? 180 : 0 }}
               transition={{ duration: 0.3 }}
-              aria-hidden="true" // Hide decorative icon from screen readers
+              aria-hidden="true"
             >
               <path fillRule="evenodd" d="M5.22 8.22a.75.75 0 0 1 1.06 0L10 11.94l3.72-3.72a.75.75 0 1 1 1.06 1.06l-4.25 4.25a.75.75 0 0 1-1.06 0L5.22 9.28a.75.75 0 0 1 0-1.06Z" clipRule="evenodd" />
             </motion.svg>
@@ -86,7 +94,11 @@ function Header() {
                     <Link
                       href={`/category/${cat.slug}`}
                       onClick={closeAllMenus}
-                      className="block rounded-md px-3 py-2 text-sm font-semibold text-gray-700 transition-colors hover:bg-gray-100 hover:text-amber-500"
+                      // Tbadlo l'colors dyal text w hover
+                      className="block rounded-md px-3 py-2 text-sm font-semibold transition-colors hover:bg-gray-100"
+                      style={{ color: brandDarkGray, '--hover-color': brandTeal }}
+                      onMouseOver={e => e.currentTarget.style.color = 'var(--hover-color)'}
+                      onMouseOut={e => e.currentTarget.style.color = brandDarkGray}
                     >
                       All {cat.title}
                     </Link>
@@ -98,7 +110,11 @@ function Header() {
                         key={sub._id}
                         href={`/brand/${sub.slug}`}
                         onClick={closeAllMenus}
-                        className="block rounded-md px-3 py-2 text-sm font-medium text-gray-500 transition-colors hover:bg-gray-50 hover:text-amber-500"
+                        // Tbadlo l'colors dyal text w hover
+                        className="block rounded-md px-3 py-2 text-sm font-medium text-gray-500 transition-colors hover:bg-gray-50"
+                        style={{'--hover-color': brandTeal }}
+                        onMouseOver={e => e.currentTarget.style.color = 'var(--hover-color)'}
+                        onMouseOut={e => e.currentTarget.style.color = ''}
                       >
                         {sub.title}
                       </Link>
@@ -117,11 +133,12 @@ function Header() {
       <div className="p-4 border-b border-gray-200">
         <div className="max-w-7xl mx-auto flex justify-between items-center">
           <Link href="/" onClick={closeAllMenus} className="flex items-center flex-shrink-0">
+            {/* ==> IMPORTANT: Matnsach tbeddel src b'l'path dyal l'logo dyalk! */}
             <Image
-              src="/logo-v1.png"
-              alt="DESKTOPPLUS Homepage" // Added more descriptive alt text
-              width={80}
-              height={80}
+              src="/logo-vite.png" // BDEL HADA
+              alt="Viet technologie Homepage" // Bdelna alt text
+              width={100} // Zdt chwiya f'l'3rd bach yban mzyan
+              height={50}
             />
           </Link>
 
@@ -130,21 +147,25 @@ function Header() {
             <Link
               href="/contact"
               onClick={closeAllMenus}
-              className="hidden md:block rounded-md px-3 py-2 text-base font-medium text-gray-600 transition-colors hover:bg-gray-100 hover:text-amber-500"
+              // Tbadlo l'colors dyal text w hover
+              className="hidden md:block rounded-md px-3 py-2 text-base font-medium transition-colors"
+              style={{ color: brandDarkGray, '--hover-color': brandTeal }}
+              onMouseOver={e => e.currentTarget.style.color = 'var(--hover-color)'}
+              onMouseOut={e => e.currentTarget.style.color = brandDarkGray}
             >
               Contact
             </Link>
           </div>
 
           <div className="flex items-center gap-4">
-            {/* ## FIX 1: Added aria-label to the cart link ## */}
             <Link 
               href="/cart" 
               onClick={closeAllMenus} 
               className="relative" 
               aria-label={`View shopping cart, ${totalItems} items`}
             >
-              <FaShoppingCart className="text-3xl text-amber-500 cursor-pointer transition-transform duration-300 hover:scale-110" aria-hidden="true" />
+              {/* Bdelna l'color dyal l'icona l' teal */}
+              <FaShoppingCart style={{ color: brandTeal }} className="text-3xl cursor-pointer transition-transform duration-300 hover:scale-110" aria-hidden="true" />
               {totalItems > 0 && (
                 <motion.span
                   initial={{ scale: 0 }}
@@ -157,16 +178,15 @@ function Header() {
             </Link>
             
             <div className="md:hidden">
-              {/* ## FIX 2: Added aria-label to the mobile menu button ## */}
               <button 
                 onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)} 
                 aria-label={isMobileMenuOpen ? "Close menu" : "Open menu"}
                 aria-expanded={isMobileMenuOpen}
               >
                 {isMobileMenuOpen ? (
-                  <FaTimes className="text-2xl text-gray-700" aria-hidden="true" />
+                  <FaTimes className="text-2xl" style={{ color: brandDarkGray }} aria-hidden="true" />
                 ) : (
-                  <FaBars className="text-2xl text-gray-700" aria-hidden="true" />
+                  <FaBars className="text-2xl" style={{ color: brandDarkGray }} aria-hidden="true" />
                 )}
               </button>
             </div>
@@ -183,12 +203,16 @@ function Header() {
             transition={{ duration: 0.3, ease: "easeInOut" }}
             className="md:hidden overflow-hidden border-b border-gray-200 bg-white"
           >
-            <div className="p-4 flex flex-col gap-">
+            <div className="p-4 flex flex-col">
               <NavLinks isMobile={true}/>
               <Link
                 href="/contact"
                 onClick={closeAllMenus}
-                className="w-full text-left rounded-md mt-4 px-3 py-4 text-base font-medium text-gray-600 transition-colors hover:bg-gray-100 hover:text-amber-500"
+                // Tbadlo l'colors dyal text w hover f'mobile
+                className="w-full text-left rounded-md mt-4 px-3 py-4 text-base font-medium transition-colors"
+                style={{ color: brandDarkGray, '--hover-color': brandTeal }}
+                onMouseOver={e => e.currentTarget.style.color = 'var(--hover-color)'}
+                onMouseOut={e => e.currentTarget.style.color = brandDarkGray}
               >
                 Contact
               </Link>

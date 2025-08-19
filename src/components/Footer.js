@@ -1,56 +1,48 @@
 "use client";
 import React from 'react';
-import { motion } from 'framer-motion';
-import { FaMapMarkerAlt, FaPhone, FaInstagram, FaWhatsapp } from 'react-icons/fa';
+import { FaMapMarkerAlt, FaWhatsapp, FaInstagram } from 'react-icons/fa';
 import Link from 'next/link';
 
 function Footer() {
   return (
-    <footer 
-      // 1. تغيير الخلفية إلى الأسود وتغيير لون الخط الفاصل
-      className='bg-gray-900 p-6 md:p-10 mt-16 border-t border-gray-700' 
- 
-    >
-      <div className='max-w-6xl mx-auto'>
+    <footer className='mt-16 border-t border-slate-600 bg-brand-dark p-6 md:p-10'>
+      <div className='mx-auto max-w-6xl'>
         
         <div className='text-center'>
-            {/* 2. تغيير لون العنوان الرئيسي إلى الذهبي */}
-            <h2 className="text-4xl font-bold mb-8 text-amber-400">Contact Us</h2>
+            <h2 className="mb-8 text-4xl font-bold text-brand-teal">Contact Us</h2>
 
             <div className='inline-flex flex-col items-start gap-8 md:flex-row md:justify-around'>
               
               {/* Address */}
               <div className='flex items-center gap-x-3'>
-                {/* 3. تغيير لون الأيقونة إلى الذهبي */}
-                <FaMapMarkerAlt size={30} className='text-amber-400' />
+                <FaMapMarkerAlt size={30} className='text-brand-teal' />
                 <div className='text-left'>
                   <h3 className='text-lg font-semibold text-white'>Address</h3>
-                  {/* 4. تغيير لون النص العادي إلى رمادي فاتح */}
-                  <p className='text-gray-300'>N 37 Rue 972 Hay Salam Agadir </p>
+                  <p className='text-gray-300'>Notre magasin à Agadir, hay Essalam</p>
                 </div>
               </div>
 
               {/* Phone */}
               <div className='flex items-center gap-x-3'>
-                <FaWhatsapp size={30} className='text-amber-400' />
+                <FaWhatsapp size={30} className='text-brand-teal' />
                 <div className='text-left'>
                   <h3 className='text-lg font-semibold text-white'>Phone</h3>
-                  <p className='text-gray-300'>+212 0648730359</p>
+                  <p className='text-gray-300'>+212 637-760241</p>
                 </div>
               </div>
 
               {/* Instagram */}
               <div className='flex items-center gap-x-3'>
-                <FaInstagram size={30} className='text-amber-400' />
+                <FaInstagram size={30} className='text-brand-teal' />
                 <div className='text-left'>
                   <h3 className='text-lg font-semibold text-white'>Instagram</h3>
                   <a 
-                    href="https://www.instagram.com/desktopplus/" 
+                    href="https://www.instagram.com/viet_technologie/" 
                     target="_blank" 
                     rel="noopener noreferrer"
-                    className='text-gray-300 hover:text-amber-400 hover:underline'
+                    className='text-gray-300 transition-colors hover:text-brand-teal hover:underline'
                   >
-                    @desktopplus
+                    @viet.technologie
                   </a>
                 </div>
               </div>
@@ -59,8 +51,8 @@ function Footer() {
         </div>
 
         {/* Credit */}
-       <div className='text-center text-gray-400 mt-10 pt-6 border-t border-gray-700'>
-            Made By <Link href="https://www.linkedin.com/in/hamzachbit" target="_blank" className='text-amber-400 font-semibold hover:underline'>Hamza Chbit</Link>
+       <div className='mt-10 border-t border-slate-600 pt-6 text-center text-gray-400'>
+            Made By <Link href="https://www.linkedin.com/in/hamzachbit" target="_blank" className='font-semibold text-brand-teal hover:underline'>Hamza Chbit</Link>
         </div>
 
       </div>

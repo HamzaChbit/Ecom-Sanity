@@ -4,7 +4,7 @@ import ProductsView from "@/src/components/ProductsView";
 import { getProducts } from "@/src/sanity/product-util";
 export const revalidate = 10;
 export const metadata = {
-  title: "All Products - DESKTOPPLUS",
+  title: "All Products - Viet technologie",
   description: "Browse our collection of high-quality products. Find the best deals on the latest items.",
   keywords: ["products", "e-commerce", "shopping", "deals"],
 };
