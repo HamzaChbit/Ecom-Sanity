@@ -8,7 +8,7 @@ const client = createClient({
   useCdn: true,
 });
 
-export async function createOrder(firstName, lastName, phone, email, cart, address) {
+export async function createOrder(firstName, lastName, phone,  cart, address) {
   try {
     const orderCreationPromises = [];
 
@@ -24,7 +24,7 @@ export async function createOrder(firstName, lastName, phone, email, cart, addre
         firstName,          // prenom
         lastName,           // nom
         phone,              // numéro
-        email,
+       
         address,
         name,               // product name
         qty: quantity,

@@ -4,12 +4,14 @@ import Image from 'next/image';
 import React, { useEffect, useState } from 'react';
 import useCartStore from "../../cartStore";
 import { toast } from 'react-hot-toast';
+import Link from 'next/link';
 
 function Details({ product }) {
   const [selectedImage, setSelectedImage] = useState(product?.image);
   const [selectedColor, setSelectedColor] = useState(null);
   const [qty, setQty] = useState(1);
-  
+  const [added, setAdded] = useState(false);
+
   const addToCart = useCartStore((state) => state.addToCart);
 
   useEffect(() => {
@@ -20,94 +22,77 @@ function Details({ product }) {
   }, [product?.colors]);
 
   const handleAddToCart = () => {
-    // Check if a color must be selected
     if (product?.colors?.length > 0 && !selectedColor) {
       toast.error('Please select a color');
       return;
     }
-        if (qty < 1) {
+    if (qty < 1) {
       toast.error('Quantity must be at least 1');
       return;
     }
-    
-    // Calculate the final price after discount
+
     const finalPrice = product.discount
       ? product.price - (product.price * product.discount / 100)
       : product.price;
 
-    addToCart({ 
-      product, 
-      quantity: qty, 
-      color: selectedColor, 
-      price: finalPrice 
+    addToCart({
+      product,
+      quantity: qty,
+      color: selectedColor,
+      price: finalPrice
     });
+
     toast.success('Added to cart');
+    setAdded(true); // بدل الزر
   };
 
   return (
     <div className='max-w-7xl mx-auto mt-20 p-4'>
       <div className='grid grid-cols-1 lg:grid-cols-2 gap-8'>
-
         {/* Left Column: Images */}
         <div>
-          {/* Main Image Container */}
           <div className="shadow-md relative h-96 md:h-[500px] overflow-hidden rounded-lg flex items-center justify-center bg-white">
-            
-            {/* Discount Badge */}
             {product?.discount && (
               <div className="absolute top-3 left-3 bg-red-500 text-white text-base font-semibold px-3 py-1 rounded-md z-10">
                 -{Math.floor(product.discount)}%
               </div>
             )}
-            
-            <Image 
+            <Image
               className='object-contain w-full h-full p-4'
               src={selectedImage || product?.image}
-              width={500} 
+              width={500}
               height={500}
               alt={product?.name || "Product image"}
             />
           </div>
 
-          {/* Thumbnail Images */}
+          {/* Thumbnails */}
           <div className="mt-4">
             <ul className="flex gap-4 overflow-x-auto p-1">
-              {/* Main product image thumbnail */}
-              <li 
-                onClick={() => setSelectedImage(product?.image)} 
+              <li
+                onClick={() => setSelectedImage(product?.image)}
                 className={`w-20 h-20 relative rounded-md overflow-hidden cursor-pointer flex-shrink-0 ${selectedImage === product?.image ? "ring-2 ring-offset-2 ring-amber-500" : ""}`}
               >
-                <Image
-                  src={product?.image}
-                  fill
-                  style={{objectFit:"cover"}}
-                  alt="Product thumbnail"
-                />
+                <Image src={product?.image} fill style={{ objectFit: "cover" }} alt="Product thumbnail" />
               </li>
-              {/* Extra images thumbnails */}
               {product?.extraImages?.map((image, index) => (
-                <li 
-                  key={index} 
-                  onClick={() => setSelectedImage(image)} 
+                <li
+                  key={index}
+                  onClick={() => setSelectedImage(image)}
                   className={`w-20 h-20 relative rounded-md overflow-hidden cursor-pointer flex-shrink-0 ${selectedImage === image ? "ring-2 ring-offset-2 ring-amber-500" : ""}`}
                 >
-                  <Image
-                    src={image}
-                    fill
-                    style={{objectFit:"cover"}}
-                    alt={`Product thumbnail ${index + 1}`}
-                  />
+                  <Image src={image} fill style={{ objectFit: "cover" }} alt={`Product thumbnail ${index + 1}`} />
                 </li>
               ))}
             </ul>
           </div>
         </div>
 
-        {/* Right Column: Details */}
+        {/* Right Column */}
         <div className="flex flex-col p-6 justify-center">
           <h1 className="text-3xl font-semibold text-black">{product?.name}</h1>
-          
-          {/* Display Specs if available, otherwise Description */}
+
+          {/* Specs or description */}
           <div className="mt-4 text-gray-700">
             {product?.specs && product.specs.length > 0 ? (
               <ul className="list-disc pl-5 space-y-1">
@@ -120,31 +105,31 @@ function Details({ product }) {
             )}
           </div>
 
-          {/* Color Selection */}
+          {/* Colors */}
           {product?.colors && product.colors.length > 0 && (
             <div className="mt-6">
               <h2 className="text-lg font-medium text-gray-700 mb-2">Color:</h2>
               <div className="flex space-x-3">
                 {product.colors.map((color) => {
-                    const colorMap = {
-                        'Grey': 'bg-gray-700', 'Black': 'bg-black', 'White': 'bg-white border',
-                        'Blue': 'bg-blue-800', 'Red': 'bg-red-600', 'Green': 'bg-green-600',
-                    };
-                    const bgColorClass = colorMap[color] || 'bg-gray-300';
-                    return (
-                      <div 
-                        key={color} 
-                        onClick={() => setSelectedColor(color)}
-                        title={color}
-                        className={`w-8 h-8 rounded-full cursor-pointer ${bgColorClass} ${selectedColor === color ? 'ring-2 ring-offset-2 ring-amber-500' : ''}`}
-                      ></div>
-                    );
+                  const colorMap = {
+                    'Grey': 'bg-gray-700', 'Black': 'bg-black', 'White': 'bg-white border',
+                    'Blue': 'bg-blue-800', 'Red': 'bg-red-600', 'Green': 'bg-green-600',
+                  };
+                  const bgColorClass = colorMap[color] || 'bg-gray-300';
+                  return (
+                    <div
+                      key={color}
+                      onClick={() => setSelectedColor(color)}
+                      title={color}
+                      className={`w-8 h-8 rounded-full cursor-pointer ${bgColorClass} ${selectedColor === color ? 'ring-2 ring-offset-2 ring-amber-500' : ''}`}
+                    ></div>
+                  );
                 })}
               </div>
             </div>
           )}
 
-          {/* Price Section */}
+          {/* Price */}
           <div className="mt-5">
             {product?.discount ? (
               <div className="flex items-baseline gap-3">
@@ -162,7 +147,7 @@ function Details({ product }) {
             )}
           </div>
 
-          {/* Quantity and Add to Cart */}
+          {/* Quantity + Button */}
           <div className="mt-6 flex items-center gap-4">
             <div>
               <label htmlFor="qtyInput" className="sr-only">Quantity</label>
@@ -175,17 +160,25 @@ function Details({ product }) {
                 className="w-20 px-3 h-12 text-center border border-gray-300 rounded-md focus:ring-2 focus:ring-amber-500 focus:border-amber-500"
               />
             </div>
-            <button 
-              onClick={handleAddToCart} 
-              className="flex-1 bg-amber-500 hover:bg-amber-600 text-white font-bold px-6 py-3 rounded-md transition-colors duration-300"
-            >
-              Add to Cart
-            </button>
+
+            {!added ? (
+              <button
+                onClick={handleAddToCart}
+                className="flex-1 bg-amber-500 hover:bg-amber-600 text-white font-bold px-6 py-3 rounded-md transition-colors duration-300"
+              >
+                Add to Cart
+              </button>
+            ) : (
+              <Link
+                href="/cart"
+                className="flex-1 bg-green-600 hover:bg-green-700 text-white font-bold px-6 py-3 rounded-md transition-colors duration-300 text-center"
+              >
+                🛒 Go to Cart
+              </Link>
+            )}
           </div>
-            
         </div>
       </div>
-        
     </div>
   );
 }

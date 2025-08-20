@@ -16,7 +16,7 @@ function Cart() {
   const removeFromCart = useCartStore((state) => state.removeFromCart);
   const [loading, setLoading] = useState(false);
   const router = useRouter();
-  const [email, setEmail] = useState('');
+
   const [address, setAddress] = useState('');
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
@@ -29,7 +29,7 @@ function Cart() {
   const onSubmit = async (e) => {
     e.preventDefault();
 
-    if (!firstName || !lastName || !phone || !email || !address) {
+    if (!firstName || !lastName || !phone || !address) {
       toast.error("Veuillez remplir tous les champs");
       return;
     }
@@ -46,7 +46,7 @@ function Cart() {
         firstName,
         lastName,
         phone,
-        email,
+     
         address,
       });
 
@@ -69,7 +69,7 @@ function Cart() {
         const finalMessage = `🛒 Nouvelle commande: 
 👤 Client: ${firstName} ${lastName}
 📞 Téléphone: ${phone}
-📧 Email: ${email}
+
 🏠 Adresse: ${address}
 
 📦 Articles:
@@ -155,9 +155,9 @@ ${messageItems}
             <div className='flex'>
               <input className='px-5 py-2 my-2 w-full bg-gray-100 rounded' type="tel" value={phone} onChange={(e) => setPhone(e.target.value)} placeholder="Numéro de téléphone" required />
             </div>
-            <div className='flex'>
+            {/* <div className='flex'>
               <input className="px-5 py-2 my-2 w-full bg-gray-100 rounded" type="email" value={email} onChange={(e) => setEmail(e.target.value)} placeholder="Email" required />
-            </div>
+            </div> */}
             <div className='max-w-sm mx-auto space-y-4 mt-4'>
               <button type="submit" disabled={loading} className="text-lg w-full font-semibold text-center bg-amber-500 hover:bg-amber-600 text-white py-2 px-4 rounded transition-colors">
                 {loading ? "Loading..." : "Commander"}

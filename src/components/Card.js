@@ -79,13 +79,13 @@ function Card({ product }) {
         </div>
 
         {/* Add to Cart Button - hidden until hover */}
-        <button
+        {/* <button
           onClick={handleAddToCart}
           className="absolute bottom-40 right-1/2 translate-x-1/2 bg-amber-500 hover:bg-amber-600 text-white font-semibold px-4 py-2 rounded-xl shadow-md flex items-center gap-2 opacity-0 translate-y-5 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-300"
         >
           <FaShoppingCart />
           Add to Cart
-        </button>
+        </button> */}
       </div>
     </Link>
   );
