@@ -10,8 +10,9 @@ module.exports = {
       colors: {
         brand: {
           // L'ALWAN JDIDA DYAL "DESKTOP PLUS"
-          amber: '#FFBF00', // Lawn sfer/dhbi zwin
-          dark: '#1a1a1a',  // K7el mghloq chwiya
+          amber: '#FFBF00',       // Lawn sfer/dhbi zwin
+          'amber-dark': '#E5AC00', // Zedt hada l'hover (chwiya mghloq)
+          dark: '#1a1a1a',        // K7el mghloq chwiya
         },
       },
     },

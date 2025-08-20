@@ -43,14 +43,8 @@ const colorMap = {
 };
 
 function Details({ product }) {
-  // ## FIX : La vérification se fait AVANT d'appeler les Hooks ##
-  if (!product) {
-    return (
-      <div className="flex h-screen items-center justify-center">
-        <p className="text-2xl text-gray-600">Produit non trouvé.</p>
-      </div>
-    );
-  }
+  // ## FIX 1 : La vérification se fait AVANT d'appeler les Hooks pour éviter les erreurs ##
+ 
 
   // Tous les Hooks sont appelés ici, au plus haut niveau et sans condition.
   const [selectedImage, setSelectedImage] = useState(product.image);
@@ -192,6 +186,7 @@ function Details({ product }) {
             {!added ? (
               <button
                 onClick={handleAddToCart}
+                // ## FIX 2 : Zedt "text-brand-dark" bach l'ktaba tban mzyan ##
                 className="flex-1 bg-brand-amber hover:bg-amber-500 text-brand-dark font-bold px-6 py-3 rounded-md transition-colors duration-300 text-lg"
               >
                 Ajouter au Panier
