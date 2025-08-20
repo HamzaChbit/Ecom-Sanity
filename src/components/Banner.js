@@ -1,57 +1,79 @@
+"use client";
 import React from 'react';
 import Link from 'next/link';
 import { CiDeliveryTruck } from "react-icons/ci";
+import { HiCheckCircle } from "react-icons/hi";
 import Image from 'next/image';
+import { motion } from 'framer-motion';
 
 function Banner() {
   return (
-    <div className="relative w-full bg-gray-900 shadow-xl overflow-hidden">
-      {/* ✅ FIX 1: Removed `min-h-[50vh]` and `md:min-h-0`.
-        This stops forcing a container height that conflicts with the image's natural dimensions.
-      */}
-      <div className="grid md:flex md:flex-row justify-between items-center max-w-7xl mx-auto p-8 md:p-12">
+    // ## 1. L'BACKGROUND Jdid b' Pattern o Glows ##
+    <div className="relative w-full overflow-hidden bg-brand-dark shadow-xl ">
+      
+      {/* Background Pattern (subtle dots) */}
+      <div 
+        className="absolute inset-0 bg-[radial-gradient(theme(colors.brand.amber)/10%_1px,transparent_1px)] [background-size:24px_24px] opacity-50"
+      ></div>
 
-        {/* Text Content Section */}
-        <div className="col-start-1 row-start-1 z-20 text-center md:text-left md:w-1/2 space-y-4">
-          <h1 className="flex items-center justify-center md:justify-start gap-3 text-2xl font-bold text-amber-400 md:text-4xl">
-            <CiDeliveryTruck className="flex-shrink-0" size={40} />
-            <span className='text-white'>Livraisons par tout le Maroc</span>
+      {/* Glows (Adwaa) */}
+      <div className="absolute -right-60 -top-60 h-[400px] w-[400px] rounded-full bg-brand-amber/10 blur-3xl"></div>
+      <div className="absolute -bottom-60 -left-60 h-[400px] w-[400px] rounded-full bg-brand-amber/10 blur-3xl"></div>
+
+      <div className="mx-auto grid max-w-7xl items-center p-8 md:grid-cols-2 md:p-12 gap-8">
+
+        {/* Text Content Section (Baqi nafsso) */}
+        <motion.div 
+          initial={{ opacity: 0, x: -50 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ duration: 0.7, ease: "easeOut" }}
+          className="relative z-10 w-full space-y-6 text-center md:text-left"
+        >
+          
+          <h1 className="text-4xl font-extrabold text-white md:text-5xl drop-shadow-lg">
+            La Qualité au Meilleur Prix
           </h1>
 
-          <h1 className="flex items-center justify-center md:justify-start gap-3 text-2xl font-bold text-amber-400 md:text-4xl">
-            <svg xmlns="http://www.w3.org/2000/svg" className="h-9 w-9 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={3}>
-              <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
-            </svg>
-            <span className='text-white'>Garantie 90 jours</span>
-          </h1>
+          <div className="space-y-3">
+              <p className="flex items-center justify-center gap-3 text-lg font-semibold text-white md:justify-start">
+                <CiDeliveryTruck className="flex-shrink-0 text-brand-amber" size={30} />
+                Livraisons par tout le Maroc
+              </p>
+              <p className="flex items-center justify-center gap-3 text-lg font-semibold text-white md:justify-start">
+                <HiCheckCircle className="flex-shrink-0 text-brand-amber" size={30} />
+                Garantie 90 jours
+              </p>
+          </div>
 
-          <div className="pt-4">
+          <div className="pt-6">
             <Link
               href="/products"
-              className="bg-amber-500 inline-flex items-center text-black justify-center px-6 py-3 text-base font-semibold text-center rounded-lg hover:bg-amber-600 transition-colors"
+              className="inline-flex items-center justify-center rounded-lg bg-brand-amber px-8 py-3 text-center text-base font-bold text-brand-dark shadow-lg transition-transform hover:scale-105"
             >
-              Products
-              <svg className="w-5 h-5 ml-2" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+              Voir les Produits
+              <svg className="ml-2 h-5 w-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
                 <path fillRule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clipRule="evenodd"></path>
               </svg>
             </Link>
           </div>
-        </div>
+        </motion.div>
 
-        {/* Image Section */}
-        <div className="col-start-1 row-start-1 z-10 flex justify-center items-center w-full h-full md:w-1/2 opacity-70 md:opacity-100 md:justify-end">
-          <div>
+        {/* Image Section (Baqi nafsso) */}
+        <motion.div 
+          initial={{ opacity: 0, scale: 0.8 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 0.7, delay: 0.2, ease: "easeOut" }}
+          className="relative flex h-full w-full items-center justify-center md:justify-end"
+        >
             <Image
-              src="/pngwing.png"
-              width={500}
-              height={500}
-              alt="Laptop"
-              // ✅ FIX 2: Changed `h-full` to `h-auto`. This allows the image's height to scale correctly.
-              className="w-full h-auto object-cover max-w-md"
-              priority
+                src="/pngwing.png"
+                width={500}
+                height={500}
+                alt="Laptop et produits technologiques"
+                className="relative z-0 h-auto w-full max-w-md object-contain drop-shadow-2xl"
+                priority
             />
-          </div>
-        </div>
+        </motion.div>
       </div>
     </div>
   );

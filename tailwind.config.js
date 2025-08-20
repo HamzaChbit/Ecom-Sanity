@@ -7,12 +7,14 @@ module.exports = {
   ],
   theme: {
     extend: {
-      backgroundImage: {
-        "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
-        "gradient-conic":
-          "conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))",
+      colors: {
+        brand: {
+          // L'ALWAN JDIDA DYAL "DESKTOP PLUS"
+          amber: '#FFBF00', // Lawn sfer/dhbi zwin
+          dark: '#1a1a1a',  // K7el mghloq chwiya
+        },
       },
     },
   },
-  // plugins: [require("daisyui")],
+  plugins: [],
 };

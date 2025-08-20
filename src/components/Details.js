@@ -1,127 +1,168 @@
 "use client";
 
 import Image from 'next/image';
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import useCartStore from "../../cartStore";
 import { toast } from 'react-hot-toast';
 import Link from 'next/link';
+import { FaPlus, FaMinus } from 'react-icons/fa';
+import { motion } from 'framer-motion';
+
+const QuantitySelector = ({ qty, setQty }) => (
+  <div className="flex items-center">
+    <button
+      type="button"
+      onClick={() => setQty(prev => Math.max(1, prev - 1))}
+      className="h-12 w-12 flex items-center justify-center rounded-l-md border border-gray-300 text-gray-700 transition hover:bg-gray-100"
+      aria-label="Decrease quantity"
+    >
+      <FaMinus />
+    </button>
+    <input
+      type="number"
+      value={qty}
+      min="1"
+      onChange={(e) => setQty(Number(e.target.value))}
+      className="h-12 w-20 border-y border-gray-300 text-center text-lg font-semibold focus:border-brand-amber focus:outline-none focus:ring-1 focus:ring-brand-amber"
+    />
+    <button
+      type="button"
+      onClick={() => setQty(prev => prev + 1)}
+      className="h-12 w-12 flex items-center justify-center rounded-r-md border border-gray-300 text-gray-700 transition hover:bg-gray-100"
+      aria-label="Increase quantity"
+    >
+      <FaPlus />
+    </button>
+  </div>
+);
+
+const colorMap = {
+  'Grey': 'bg-gray-700', 'Black': 'bg-black', 'White': 'bg-white border',
+  'Blue': 'bg-blue-800', 'Red': 'bg-red-600', 'Green': 'bg-green-600',
+  'Gold': 'bg-yellow-500', 'Silver': 'bg-gray-300', 'Purple': 'bg-purple-600',
+};
 
 function Details({ product }) {
-  const [selectedImage, setSelectedImage] = useState(product?.image);
+  // ## FIX : La vérification se fait AVANT d'appeler les Hooks ##
+  if (!product) {
+    return (
+      <div className="flex h-screen items-center justify-center">
+        <p className="text-2xl text-gray-600">Produit non trouvé.</p>
+      </div>
+    );
+  }
+
+  // Tous les Hooks sont appelés ici, au plus haut niveau et sans condition.
+  const [selectedImage, setSelectedImage] = useState(product.image);
   const [selectedColor, setSelectedColor] = useState(null);
   const [qty, setQty] = useState(1);
   const [added, setAdded] = useState(false);
-
+  
   const addToCart = useCartStore((state) => state.addToCart);
 
   useEffect(() => {
-    // Automatically select the color if there's only one option
-    if (product?.colors?.length === 1) {
+    setSelectedImage(product.image);
+    if (product.colors?.length === 1) {
       setSelectedColor(product.colors[0]);
+    } else {
+      setSelectedColor(null);
     }
-  }, [product?.colors]);
+    setAdded(false); 
+  }, [product]);
 
   const handleAddToCart = () => {
-    if (product?.colors?.length > 0 && !selectedColor) {
-      toast.error('Please select a color');
+    if (product.colors?.length > 0 && !selectedColor) {
+      toast.error('Veuillez sélectionner une couleur');
       return;
     }
     if (qty < 1) {
-      toast.error('Quantity must be at least 1');
+      toast.error('La quantité doit être au moins de 1');
       return;
     }
-
+    
     const finalPrice = product.discount
       ? product.price - (product.price * product.discount / 100)
       : product.price;
 
-    addToCart({
-      product,
-      quantity: qty,
-      color: selectedColor,
-      price: finalPrice
+    addToCart({ 
+      product, 
+      quantity: qty, 
+      color: selectedColor, 
+      price: finalPrice 
     });
-
-    toast.success('Added to cart');
-    setAdded(true); // بدل الزر
+    toast.success('Ajouté au panier');
+    setAdded(true);
   };
+  
+  const discountedPrice = product.discount
+    ? Math.floor(product.price - (product.price * product.discount / 100))
+    : Math.floor(product.price);
+    
+  const allImages = [product.image, ...(product.extraImages || [])];
 
   return (
-    <div className='max-w-7xl mx-auto mt-20 p-4'>
-      <div className='grid grid-cols-1 lg:grid-cols-2 gap-8'>
-        {/* Left Column: Images */}
-        <div>
-          <div className="shadow-md relative h-96 md:h-[500px] overflow-hidden rounded-lg flex items-center justify-center bg-white">
-            {product?.discount && (
-              <div className="absolute top-3 left-3 bg-red-500 text-white text-base font-semibold px-3 py-1 rounded-md z-10">
+    <div className='mx-auto mt-5 max-w-7xl p-4'>
+      <div className='grid grid-cols-1 gap-12 lg:grid-cols-2 lg:items-center'>
+
+        <motion.div initial={{ opacity: 0, x: -50 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.5 }}>
+          <div className="relative flex h-96 items-center justify-center overflow-hidden rounded-lg bg-gray-50 shadow-lg md:h-[500px]">
+            {product.discount && (
+              <div className="absolute left-3 top-3 z-10 rounded-md bg-red-600 px-3 py-1 text-base font-semibold text-white">
                 -{Math.floor(product.discount)}%
               </div>
             )}
-            <Image
-              className='object-contain w-full h-full p-4'
-              src={selectedImage || product?.image}
-              width={500}
+            <Image 
+              className='h-full w-full object-contain p-4'
+              src={selectedImage}
+              width={500} 
               height={500}
-              alt={product?.name || "Product image"}
+              alt={product.name}
+              priority
             />
           </div>
 
-          {/* Thumbnails */}
           <div className="mt-4">
             <ul className="flex gap-4 overflow-x-auto p-1">
-              <li
-                onClick={() => setSelectedImage(product?.image)}
-                className={`w-20 h-20 relative rounded-md overflow-hidden cursor-pointer flex-shrink-0 ${selectedImage === product?.image ? "ring-2 ring-offset-2 ring-amber-500" : ""}`}
-              >
-                <Image src={product?.image} fill style={{ objectFit: "cover" }} alt="Product thumbnail" />
-              </li>
-              {product?.extraImages?.map((image, index) => (
-                <li
-                  key={index}
-                  onClick={() => setSelectedImage(image)}
-                  className={`w-20 h-20 relative rounded-md overflow-hidden cursor-pointer flex-shrink-0 ${selectedImage === image ? "ring-2 ring-offset-2 ring-amber-500" : ""}`}
+              {allImages.map((image, index) => (
+                <li 
+                  key={index} 
+                  onClick={() => setSelectedImage(image)} 
+                  className={`relative h-20 w-20 flex-shrink-0 cursor-pointer overflow-hidden rounded-md transition-all ${selectedImage === image ? "ring-2 ring-offset-2 ring-brand-amber" : "hover:opacity-80"}`}
                 >
-                  <Image src={image} fill style={{ objectFit: "cover" }} alt={`Product thumbnail ${index + 1}`} />
+                  <Image src={image} fill className="object-cover" alt={`Miniature ${index + 1}`} />
                 </li>
               ))}
             </ul>
           </div>
-        </div>
+        </motion.div>
 
-        {/* Right Column */}
-        <div className="flex flex-col p-6 justify-center">
-          <h1 className="text-3xl font-semibold text-black">{product?.name}</h1>
-
-          {/* Specs or description */}
-          <div className="mt-4 text-gray-700">
-            {product?.specs && product.specs.length > 0 ? (
-              <ul className="list-disc pl-5 space-y-1">
+        <motion.div initial={{ opacity: 0, x: 50 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.5, delay: 0.2 }} className="flex flex-col p-2">
+          <h1 className="text-3xl font-bold text-brand-dark md:text-4xl">{product.name}</h1>
+          
+          <div className="my-6 text-brand-dark">
+            {product.specs && product.specs.length > 0 ? (
+              <ul className="list-disc space-y-2 pl-5 text-lg text-gray-600">
                 {product.specs.map((spec, index) => (
                   <li key={index}>{spec.value}</li>
                 ))}
               </ul>
             ) : (
-              <p className="text-lg">{product?.description}</p>
+              <p className="text-lg text-gray-600">{product.description}</p>
             )}
           </div>
 
-          {/* Colors */}
-          {product?.colors && product.colors.length > 0 && (
-            <div className="mt-6">
-              <h2 className="text-lg font-medium text-gray-700 mb-2">Color:</h2>
-              <div className="flex space-x-3">
+          {product.colors && product.colors.length > 0 && (
+            <div className="mt-2">
+              <h2 className="mb-3 text-lg font-semibold text-brand-dark">Couleur : <span className='text-gray-600 font-medium'>{selectedColor}</span></h2>
+              <div className="flex flex-wrap gap-3">
                 {product.colors.map((color) => {
-                  const colorMap = {
-                    'Grey': 'bg-gray-700', 'Black': 'bg-black', 'White': 'bg-white border',
-                    'Blue': 'bg-blue-800', 'Red': 'bg-red-600', 'Green': 'bg-green-600',
-                  };
                   const bgColorClass = colorMap[color] || 'bg-gray-300';
                   return (
-                    <div
-                      key={color}
+                    <div 
+                      key={color} 
                       onClick={() => setSelectedColor(color)}
                       title={color}
-                      className={`w-8 h-8 rounded-full cursor-pointer ${bgColorClass} ${selectedColor === color ? 'ring-2 ring-offset-2 ring-amber-500' : ''}`}
+                      className={`h-8 w-8 cursor-pointer rounded-full transition-all ${bgColorClass} ${selectedColor === color ? 'ring-2 ring-offset-2 ring-brand-amber' : 'hover:scale-110'}`}
                     ></div>
                   );
                 })}
@@ -129,55 +170,42 @@ function Details({ product }) {
             </div>
           )}
 
-          {/* Price */}
-          <div className="mt-5">
-            {product?.discount ? (
+          <div className="mt-8">
+            {product.discount ? (
               <div className="flex items-baseline gap-3">
-                <span className="text-amber-500 text-3xl font-bold">
-                  د.م. {Math.floor(product.price - (product.price * product.discount / 100))}
+                <span className="text-4xl font-bold text-brand-amber">
+                  د.م. {discountedPrice}
                 </span>
-                <span className="text-gray-400 line-through text-xl font-semibold">
+                <span className="text-2xl font-semibold text-gray-400 line-through">
                   د.م. {Math.floor(product.price)}
                 </span>
               </div>
             ) : (
-              <span className="text-amber-500 text-3xl font-bold">
+              <span className="text-4xl font-bold text-brand-amber">
                 د.م. {Math.floor(product.price)}
               </span>
             )}
           </div>
 
-          {/* Quantity + Button */}
-          <div className="mt-6 flex items-center gap-4">
-            <div>
-              <label htmlFor="qtyInput" className="sr-only">Quantity</label>
-              <input
-                id="qtyInput"
-                type="number"
-                value={qty}
-                min="1"
-                onChange={(e) => setQty(Number(e.target.value))}
-                className="w-20 px-3 h-12 text-center border border-gray-300 rounded-md focus:ring-2 focus:ring-amber-500 focus:border-amber-500"
-              />
-            </div>
-
+          <div className="mt-8 flex flex-col gap-4 sm:flex-row">
+            <QuantitySelector qty={qty} setQty={setQty} />
             {!added ? (
               <button
                 onClick={handleAddToCart}
-                className="flex-1 bg-amber-500 hover:bg-amber-600 text-white font-bold px-6 py-3 rounded-md transition-colors duration-300"
+                className="flex-1 bg-brand-amber hover:bg-amber-500 text-brand-dark font-bold px-6 py-3 rounded-md transition-colors duration-300 text-lg"
               >
-                Add to Cart
+                Ajouter au Panier
               </button>
             ) : (
               <Link
                 href="/cart"
-                className="flex-1 bg-green-600 hover:bg-green-700 text-white font-bold px-6 py-3 rounded-md transition-colors duration-300 text-center"
+                className="flex-1 bg-green-600 hover:bg-green-700 text-white font-bold px-6 py-3 rounded-md transition-colors duration-300 text-center text-lg flex items-center justify-center"
               >
-                🛒 Go to Cart
+                🛒 Voir le Panier
               </Link>
             )}
           </div>
-        </div>
+        </motion.div>
       </div>
     </div>
   );
