@@ -6,10 +6,10 @@ import dynamic from 'next/dynamic';
 
 // 1. Updated metadata with your brand name
 export const metadata = {
-  title: "Viet technologie | High-Quality Laptops & Tech in Agadir, Morocco",
+  title: "DESKTOPPLUS | High-Quality Laptops & Tech in Agadir, Morocco",
   description: "Your one-stop shop for the latest laptops, computer components, and tech gadgets in Morocco. Quality products, 2-month warranty, and delivery across the country.",
   openGraph: {
-    title: "Viet technologie | Laptops & Tech",
+    title: "DESKTOPPLUS | Laptops & Tech",
     description: "Discover the best deals on high-quality tech in Morocco.",
     images: [
       {
